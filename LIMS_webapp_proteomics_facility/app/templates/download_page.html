@@ -1,0 +1,25 @@
+{% extends 'baseuser.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center border-bottom border-type1 pt-2 pb-3">
+
+  <div class="col-lg pb-4">
+  <h5 class="text-left"><strong>Click on one of the below links to download your file of interest:<strong></h5> 
+
+   <!-- {% for filepath in paths_to_files %}
+		<a href="/download/{{ filepath[0] }}"><button class='btn btn-default'>{{ filepath[1] }}</button></a><br>
+    {% endfor %}-->
+    
+    {% for file_num_in_page, file_name in filelist %}
+		<a href="/download/{{ file_num_in_page }}""><button class='btn btn-default'>{{ file_name }}</button></a><br>
+    {% endfor %}
+
+    
+    
+  </div>
+</div>
+
+
+{% endblock %}
+

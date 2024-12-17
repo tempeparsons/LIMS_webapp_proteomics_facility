@@ -1,0 +1,236 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="col">
+    <h5><span style="color: red">{{ msg }}</span></h5>
+  </div>
+  
+    <h5 class="text-left">Here you can download  .csv tables for the last financial year or the current one to date. Tables can be summed by group and grant, if required. </h5>
+    <h5 class="text-left">You can also update minutes-per-method, price-per-min and price-per-institute_type (scroll down, button on right).</h5>
+	<br>
+    <div class="row pt-2">
+    
+    <div class="col-lg-4 ps-5">
+    <h6><strong>Ungrouped table:</strong></h6>
+    <li>Year + Q that instrument or analysis performed</li>
+    <li>Sign-off credentials of relevant staff member</li>
+    <li>Experiment code</li>
+    <li>Email address of group leader</li>
+    <li>Institute</li>
+    <li>Grant code or payment type</li>
+    <li>Total cost (in downloaded version only if signed off)</li>
+    </div>
+    
+    <div class="col-lg-4 ps-5">
+    <h6><strong>Grouped table:</strong></h6>
+    <li>Email address of group leader</li>
+    <li>Grant code or payment type</li>
+    <li>Institute type</li>
+    <li>Institute name</li>
+    <li>Total cost (in downloaded version only if signed off)</li>
+    </div>
+    
+    </div>
+
+    <br>
+    <h6 class="text-left">For more detailed information on facility usage and reveue, with graphical summaries, navigate to the 'Facility Stats' page via the top menu bar.</h6>
+    <h6 class="text-left">For the current pricing scheme, keep scrolling down.</h6>
+    <br>
+    <h6 class="text-left">Experiments with these codes have mass spec costs not yet signed off. Costs cannot be downloaded. If in doubt, consult with Robin.</h6>
+    <h6><red>{% for i in no_ms_signoff %}{{ i }} ,{% endfor %}</red></h6>
+    <br>
+    <h6 class="text-left">Experiments with these codes have bespoke data costs not yet signed off. Costs cannot be downloaded. If in doubt, consult with Harriet.</h6>
+    <h6><red>{% for i in no_py_signoff %}{{ i }} ,{% endfor %}</red></h6>
+  
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-7 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Choose the time period and data grouping (data grouped by group leader and grant number):</strong></h6>
+    </div>
+  </div>
+
+
+  
+  <div class="row pt-2">
+  
+    <div class="col-lg-2">
+      <label for="date">time period</label>
+        <select style="font-size:14px;" class="form-select" name="date" id="date">
+        <option selected="selected" disable="disabled" value="">select:</option>
+          {% for i in finan_dates %}
+              <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-lg-2">
+      <label for="date">group (Y/N)</label>
+        <select style="font-size:14px;" class="form-select" name="group" id="group">
+           <option value="N">No</option>
+           <option value="Y">Yes</option>
+        </select>
+    </div>
+
+    <div class="col pt-4 pb-4">
+      <input type="submit" name="get_info" value="view/download this info">
+    </div>
+    
+</div>
+
+<br><br>
+
+  <div class="col border-bottom border-type1 mb-3">
+  
+    <div class="row pt-4 pb-3">
+    
+      <div class="col-lg-6">
+        <h5 class="text-left"><strong><blue>CURRENT PRICING SCHEME (MARCH 2024)</blue></strong></h5>
+      </div>
+      <div class="col-lg-1">
+        <input type="submit" name="update_prices" value="update the pricing">
+      </div>
+      
+    </div>
+      
+    <div>
+      <h6 class="text-left"><strong>These are the number of minutes allocated for bench, instrument and database search processes (extras wash = 120 mins if > 2 washes per instr. method)</strong></h6>
+    </div>
+  </div>
+  
+</div>
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center pt-3">
+  <table style="font-size:15px; width:90%" class="table table-sm table-responsive">
+    <thead class="table-success">
+      <tr>
+      {% for key in bdict.keys() %}
+          <th>{{ key }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+      {% for val in bdict.values() %}
+          <td>{{ val }}</td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  <div class="row justify-content-center">  
+  <table style="font-size:15px; width:90%" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+      {% for key in idict.keys() %}
+          <th>{{ key }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+      {% for val in idict.values() %}
+          <td>{{ val }}</td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  <div class="row justify-content-center">
+  <table style="font-size:15px; width:90%" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+      {% for key in ddict.keys() %}
+          <th>{{ key }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+      {% for val in ddict.values() %}
+          <td>{{ val }}</td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Costs (GBP per min) for types of facility work</strong></h6>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+  <table style="font-size:15px; width:65%" class="table table-sm table-responsive">
+    <thead class="table-success">
+      <tr>
+      {% for key in ppdict.keys() %}
+          <th>{{ key }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+      {% for val in ppdict.values() %}
+          <td>{{ val }}</td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Multiplcation factor for client types (CU early grant = 0.77)</strong></h6>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+  <table style="font-size:15px; width:65%" class="table table-sm table-responsive">
+    <thead class="table-success">
+      <tr>
+      {% for key in ipdict.keys() %}
+          <th>{{ key }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+      {% for val in ipdict.values() %}
+          <td>{{ val }}</td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row pb-5">
+    <div class="col-lg-7 border-bottom border-type1 pt-1 pb-2">
+      <h5 class="text-left"><strong>Experiment request details for:</strong></h5>
+      <h6 class="text-left">Experiment code: <strong>{{ ecode }}</strong></h6>
+      <h6 class="text-left">Researcher name: <strong>{{fn }} {{ ln }}</strong>, group leader email <strong>{{ gid }}</strong>: </h6>
+      <h6 class="text-left">Experiment type: <strong>{{ etype }}</strong></h6>
+      <h6 class="text-left">Experiment category: <strong>{{ ecat }}</strong></h6>
+      <h6 class="text-left">Databases: <strong>{{ dbcat }}</strong></h6>
+      <h6 class="text-left">Date requested: <strong>{{ reqdt }}</strong></h6>
+    </div>
+  </div>
+
+  
+  <table style="width:100%" class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">sample code</th>
+        <th scope="col">protein conc</th>
+        <th scope="col">estimated injn's</th>
+        <th scope="col" style="width:40%">list of requested bench processes</th>
+        <th scope="col" style="width:20%">benchwork status (if relevant)</th>
+        <th scope="col" style="width:20%">instrument status (if relevant)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table_rows %}
+      <tr>
+        {% for item in row %}
+        <td style="text-align:left">{{ item }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+
+  <div class='col-lg-9 pt-5'>
+    <textarea style="font-size:14px;" rows="7" cols="60" placeholder="extra notes (if any) added by researcher" readonly>{{ enotes if enotes }}</textarea>
+  </div>
+    
+
+</div>
+
+
+{% endblock %}
+
+

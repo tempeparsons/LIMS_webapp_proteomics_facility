@@ -1,0 +1,103 @@
+{% extends 'baseexternal.html' %}
+
+
+{% block content %}
+
+<div class="container border-bottom border-type1 pt-3 pb-3">
+  <div class="row">
+    <div class="col-lg pb-2">
+      <h5 class="lh-base"><strong>Prices</strong></h5>
+	  <h6 class="lh-base">The table below shows typical prices for the types of experiment most commonly run at the facility, according to the client type (Internal/External academia/Industry), though we perform many more methods than those listed. Proteomic experiments are inherently bespoke, so costs will vary according to the precise methods, enzymes used, differences in instrument time and nature of the data analysis. We also run a custom analysis service in Python and/or R, independent of sample submissions (see <a href="{{url_for('data_service')}}"><black>Data Analysis Service</black></a>). 
+	  <br><br>
+	  Example costings (GBP) include sample preparation, digestion, instrument time and standard data-analysis time. Unless specified, sample clean-up is assumed to be by S-trap column. In addition to S-trap purification, gel-purification is also possible. This typically involves running a gel, then excising and digesting 4 - 6 gel bands (approx. £860/1035/1720 extra). Users are welcome to supply their clean-up columns of choice at their own cost, or purchase them via the facility. Users may further choose to do all sample processing steps themselves and supply samples as peptides. TMT prices assume the use of in-house aliquotted TMT kits. If users prefer, they can supply their own kit or purchase one through the facility. Prices will be reduced according if users supply pre-labelled samples.</h6>
+	  <br>
+
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+  <div class="col-lg-8 pb-4">
+    <table class="table table-sm table-striped table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Example experiment</th>
+      <th scope="col">Cambridge University</th>
+      <th scope="col">External academic</th>
+      <th scope="col">Commercial</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Single gel band</td>
+        <td>174</td>
+        <td>208</td>
+        <td>348</td>
+      </tr>
+      <tr>
+        <td>Immuno-preciptation analysis</td>
+        <td>193</td>
+        <td>231</td>
+        <td>385</td>
+      </tr>
+      <tr>
+        <td>Proximity ligation with on-bead digestion</td>
+        <td>287</td>
+        <td>344</td>
+        <td>574</td>
+      </tr>
+      <tr>
+        <td>Label-free quantitative comparison of two samples</td>
+        <td>400</td>
+        <td>480</td>
+        <td>800</td>
+      </tr>
+      <tr>
+        <td>SILAC comparison of two samples</td>
+        <td>430</td>
+        <td>510</td>
+        <td>830</td>
+      </tr>
+      <tr>
+        <td>TMT-labeled sample (single injection)</td>
+        <td>746</td>
+        <td>894</td>
+        <td>1492</td>
+      </tr>
+      <tr>
+        <td>TMT-labeled sample (12 fractions)</td>
+        <td>3408</td>
+        <td>4089</td>
+        <td>6816</td>
+      </tr>
+      <tr>
+        <td>Intact mass analysis (user-purified protein) </td>
+        <td>193</td>
+        <td>231</td>
+        <td>385</td>
+      </tr>
+    </tbody>
+    </table>  
+  </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg pb-2">
+      <h5 class="lh-base"><strong>Pre-submission grant applications requiring the CIMR Proteomics Facility</strong></h5>
+	  <h6 class="lh-base">A written quotation is required from the Facility, based upon sufficient information of the type of work required. The Facility will make every reasonable effort to provide this quotation within ten days of receipt of a written request to proteomics.portal@cimr.cam.ac.uk. If this is not possible in time for a grant deadline, the user should estimate charges according to the table below, BUT be aware that the costs incurred in practice may be considerably greater, which may limit the experiments that can be conducted with the funding applied for.</h6>
+	  <br>
+	  <h5 class="lh-base"><strong>Commercial usage of the CIMR Proteomics Facility</strong></h5>
+	  <h6 class="lh-base">A written quotation is required from Cambridge Enterprise for all work. Please contact the facility (proteomics.portal@cimr.cam.ac.uk) to arrange this.</h6>
+	  <br>
+	  <h5 class="lh-base"><strong>Turnaround time</strong></h5>
+	  <h6 class="lh-base">In general, unless the facility is exceptionally busy, samples will be processed, injected into the mass spectrometer and data returned to users within 4 weeks of submission. Please note that for samples requiring peptide fractionation and injection of fractions (e.g. for TMT labelling) data for fractions will be returned within 8 weeks of submission.In the case of substantial instument down-time, users will be notified by email.</h6>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+      
+
+

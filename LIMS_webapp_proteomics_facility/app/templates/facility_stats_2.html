@@ -1,0 +1,43 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container border-bottom border-type2">
+  
+  <div class="col">
+    <h5><span style="color: green">{{ msg }}</span></h5>
+  </div>
+
+  <h6>Downloads can be found in facility > proteomics_stats.</h6>
+
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="row">
+    <div class="col-sm-9 pt-0 pb-4">
+	  <img src="data:image/png;base64,{{ plot_url }}"  class="plotimg">
+    </div>
+    
+    <div class="col-sm-1 pt-5">
+      <input type="submit" name="get_plot" value="Download This Plot">
+    </div>
+    
+  </div>
+  
+  </form>
+    
+</div>
+
+{% endblock %}
+
+
+
+
+
+

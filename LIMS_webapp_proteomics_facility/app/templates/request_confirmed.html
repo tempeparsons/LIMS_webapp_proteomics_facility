@@ -1,0 +1,52 @@
+{% extends 'baseuser.html' %}
+
+
+{% block extrascript %}
+<script> 
+window.history.forward();
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="col-lg-12 border-bottom border-type2">
+    <h5>Thank you for submitting an experiment request! Please check your request summary and contact the facility if something doesn't look right.</h5>
+    <h5>An email of this summary has been sent to you and to the facility email account.</h5>
+    <br>
+    <h6>Names: {{ fn}} {{ ln }}</h6>
+    <h6>Group/Project leader's email: {{ gid }}</h6>
+    <h6>Your institute category: {{ itype }}
+    <h6>Grant code (if CU) for this experiment: {{ gc }}</h6>
+    <h6>Experiment code: {{ ec }}</h6>
+    <h6>Experiment type: {{ etype }}</h6>
+    <h6>Experiment category: {{ ecat }}</h6>
+    <h6>Requested benchwork (if any): {{ bw_reqs[0] if bw_reqs[0] else 'None' }}</h6>
+    <h6>Database search requested: {{ db_yn }}</h6>
+    <h6>Database search requested: {{ dbcat if dbcat else 'None' }}</h6>
+    <h6>List of samples codes: {{ sclist }}</h6>
+    <h6>Initial request date: {{ reqdt }}</h6>
+    <br>
+    
+    
+  <div class="row pb-3">
+    <div class="col-lg-8">
+      <p>Unless this was a data-only request, please label <strong>EACH TUBE</strong> with your experiment code <strong>AND</strong> sample code as shown. For a <strong>whole gel</strong>, please <strong>label the container</strong> with one experiment code and <em>N</em> sample codes. There's no need to add dates or initials; our database does that for you. If your codes are too long, email us some alternative ones clearly mapped to the original codes.<strong>If nobody is in the facility, try and come back later if possible as it's best to drop samples off in person.</strong></p>
+      <br>
+      <p>See you soon,</p>
+      <p>The CIMR proteomics facility team.</p>
+    </div>
+    <div class="col-lg-4 pt-2 pb-2 border align-self-center">
+	  <img src="{{ url_for('static', filename='labelled_tube.jpg') }}"  class="img4">
+    </div>
+  </div>
+    
+</div>
+
+
+{% endblock %}
+
+
+      
+
+

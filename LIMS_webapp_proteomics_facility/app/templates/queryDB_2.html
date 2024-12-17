@@ -1,0 +1,283 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>USERS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in usrs[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in usrs[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>EXPERIMENT REQUESTS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in ereqs[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in ereqs[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>SAMPLE REQUESTS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in sreqs[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in sreqs[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>SAMPLE DETAILS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in sdets[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in sdets[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>INSTRUMENT DETAILS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in idets[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in idets[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>BENCH HOURS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <table style="width:80%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in bhrs[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in bhrs[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>DATA REQUESTS table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <table style="width:80%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for colname in dreqs[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in dreqs[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <h6 class="text-center"><strong><blue>EXPENSE SUMMARY table</blue></strong></h6>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table style="width:100%; font-size:80%;" class="table table-sm">
+  <thead>
+    <tr>
+      {% for colname in esum[0] %}
+      <th scope="col">{{ colname }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for entry in esum[1] %}
+    <tr>
+      {% for cell in entry %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  
+<br>
+
+</div>
+
+
+{% endblock %}

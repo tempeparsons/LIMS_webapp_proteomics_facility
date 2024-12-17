@@ -1,0 +1,104 @@
+{% extends 'baseexternal.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center mt-3">
+  <div class="col-lg-10">
+    <div class="alert alert-dark" role="alert">
+      These pages are reserved for <strong>registered</strong> facility users. Once you are <a href={{url_for('prospective_users')}}><strong><black>registered with the facility</black></strong></a> you can set yourself a password on this page. 
+    </div>
+  </div>
+</div>
+
+
+<div class="container border-bottom border-type2">
+  <div class="col-lg-9 border-bottom border-type1 pt-2">
+  <h5 class="text-left"><strong>First sign in after registering?</strong> Set your password here (minimum 10 characters), then log in below.</h5>
+</div>
+  
+  <form method=post>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+	<div class="col-lg-2 pt-3">
+	  <div class="form-outline mb-4">
+	  <input type="text" name="username" id="username" class="form-control" placeholder="registered email" value="{{ useremail }}" required>
+      </div>
+     </div>
+        
+    <div class="row">
+      <div class="col-lg-3">
+      <input type="password" class="form-control" name="pw1" id="pw1" minlength="10" placeholder="choose a password" required>
+      </div>
+      <div class="col-lg-3 mb-4">
+      <input type="password" class="form-control" name="pw2" id="pw2" minlength="10" placeholder="repeat chosen password" required>
+      </div>
+    </div>
+   
+    <div class="row">
+	  <div class="col-lg-2">
+	    <div class="form-outline mb-4">
+	      <input type="submit" name="setpw" value="set my password">
+        </div>
+      </div>
+      <div class="col-lg-5 mb-4">
+	    <h6><strong><red>{{ msg }}</red></strong></h6>
+	    <h6><strong><green>{{ msg0 }}</green></strong></h6>
+	  </div>
+      </div>
+  </form>
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2">
+    <div class="row">
+      <div class="col">
+        <h5 class="text-left"><strong>Users with passwords sign in here:</strong></h5>
+      </div>
+      <div class="col-lg-2">
+        <h5 class="text-left"></h5>
+      </div>
+      <div class="col">
+        <h5 class="text-left">Forgotten password?</h5>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-3 pt-3">
+      <form method=post>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+	      <div class="form-outline mb-4">
+	        <input type="text" name="registered_user" id="registered_user" class="form-control" placeholder="registered email" value="{{ reg_useremail }}" required>
+          </div>
+	      <div class="form-outline mb-4">
+	        <input type="password" name="registered_pw" id="registered_pw" class="form-control" placeholder="password" required>
+          </div>
+          <div class="col form-outline mb-4">
+	        <input type="submit" name="login" value="log in">
+          </div>
+          <div class="col pt-1">
+	        <h6><strong><red>{{ msg1 }}</red></strong></h6>
+	      </div>
+      </form>
+    </div>
+    <div class="col-lg-2 ">
+    </div> 
+    <div class="col-lg-3 pt-3">
+      <form method=post>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+	      <div class="form-outline mb-4">
+	        <input type="text" name="idiot" id="idiot" class="form-control" placeholder="email" value="">
+          </div>
+          <div class="col-lg-2 ">
+	        <input type="submit" name="get_reset" value="request reset">
+          </div>
+          <div class="col pt-2">
+	        <h6><strong><red>{{ msg2 }}</red></strong></h6>
+	      </div>
+	  </div>
+    </form>
+</div>
+
+		
+{% endblock %}
+
+
+

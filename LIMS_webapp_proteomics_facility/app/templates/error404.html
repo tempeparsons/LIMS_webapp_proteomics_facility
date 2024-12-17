@@ -1,0 +1,17 @@
+{% extends "baseerror.html" %}
+
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center border-bottom border-type1 pt-2 pb-3">
+  <div class="col-lg-6 pt-2 pb-2 align-self-center">
+    <h4 class="text-center" id='welcome'><blue>Page Not Found.</blue></h4>
+    <h4 class="text-center" id='welcome'>If you've arrived here from a page with dropdown menus, go back and check that you selected something.</h4>
+    <h6 class="text-center" id='welcome'><a href="{{ url_for('index') }}">go back to the Main Home Page (this will log you out).</a></h6>
+  </div>
+</div>
+{% endblock %}
+
+
+

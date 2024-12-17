@@ -1,0 +1,23 @@
+{% extends "baseerror.html" %}
+
+
+{% block title %}Internal server error{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center pt-3 pb-3">
+  <div class="col-lg-8">
+    <h4><blue>Internal Server Error.</blue></h4>
+    <h6>Something hasn't worked. Here are somethings you can try:</h6> 
+    <h6>Check you've selected something from the dropdown menu.</h6> 
+    <h6>Check your experiment code is not over the prescribed length.</h6> 
+    <h6>Check your sample codes aren't over the prescribed length.</h6> 
+    <h6>Check you've filled in all the boxed on the submission form.</h6> 
+    <br>
+    <br>
+    <h6>If the problem persists, come to the facility and talk to Harriet</h6> 
+    <h6><a href="{{ url_for('index') }}">go back to the Main Home Page (this will log you out).</a></h6>
+  </div>
+</div>
+{% endblock %}
+
+

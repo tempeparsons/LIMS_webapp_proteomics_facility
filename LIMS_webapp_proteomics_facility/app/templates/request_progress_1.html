@@ -1,0 +1,49 @@
+{% extends 'baseuser.html' %}
+
+{% block extrascript %}
+<script>
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+  
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-0">
+      <h6 class="text-left">If you are not <strong>{{ fname }} {{ lname }}</strong> with user-id <strong>{{ email }}</strong> please log out now.</h6>
+      <h6 class="text-left">Otherwise, select one of your experiments from the below list to see its progress to-date and associated expenses.</h6>
+    </div>
+  </div>
+  
+  <div class="col-lg-2">
+      <select class="form-select" name="expt" id="expt" required>
+	    <option selected="selected" disable="disabled" value="">select experiment</option>
+          {% for expt in ecodes %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+
+  </div>
+  
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_expt" value="view progress and costs">
+  </div>
+  
+  </form>
+</div>
+
+{% endblock %}
+
+
+
+

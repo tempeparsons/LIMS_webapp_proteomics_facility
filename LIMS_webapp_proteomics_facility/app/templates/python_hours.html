@@ -1,0 +1,62 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="col">
+      <h6><span style="color: red">{{ msg }}</span></h6>
+    </div>
+
+  <div class="col border-bottom border-type1 pt-0 pb-0">
+  
+    <h5 class="text-left">Experiment <strong>{{ ecode }}</strong> for <strong>{{ fn }} {{ ln }}</strong>.</h5>
+    <h5> This experiment is for:<strong> {{ etype }} </strong>. You won't necessarily be able to tell from the database if they want extra analysis as users don't often know this until they've looked at their data. Extra analysis hours can be added to any experiment type.</h5>
+    <br>
+    <h6 class="text-left">There are <strong><red>{{ days_togo }}</red></strong> days until the end of this financial quarter. Unless this request is 'Data only', bear in mind you'll have to sign this off before then, or add a new data request for that user.</h6>
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h5 class="text-left"><blue><strong>Python scripting (or whatever else) hours</strong></blue></h5>
+  </div>
+  
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div  class="row pt-3">
+    <div class="col-lg-3">
+      <p>Previous entry (hrs) if added already</p>
+    </div>
+    <div class="col-lg-6">
+      <p>Current entry (hrs). Set to ZERO (as 0) to neither add nor subtract anything.</p>
+    </div>
+  </div>
+  <div class="row pb-5">
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" name="prev_hrs" id="prev_hrs" value="{{ prev_hrs }}" readonly>
+	</div>
+	<div class="col-lg-1">
+	</div>
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" type="number" step='0.5' name="curr_hrs" id="curr_hrs" required>
+	</div>
+  </div>
+  <br>
+  <h6 class="text-left">Update the hours table in the database (this won't update expenses)</h6>
+  <div class="col pb-4 pt-1">
+    <input type="submit" name="submit_pyhrs" value="add or subtract hours">
+  </div>
+  
+  </form>
+</div>
+
+
+    
+
+
+{% endblock %}

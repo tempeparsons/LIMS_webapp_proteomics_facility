@@ -1,0 +1,90 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+
+  <div class="row pb-5">
+    <div class="col-lg-7 border-bottom border-type1 pt-1 pb-2">
+      <h5 class="text-left"><strong>Update bench methods for:</strong></h5>
+      <h6 class="text-left">Experiment code: <strong>{{ ecode }}</strong></h6>
+      <h6 class="text-left">Researcher name: <strong>{{fn }} {{ ln }}</strong>, group leader email <strong>{{ gid }}</strong>: </h6>
+      <h6 class="text-left">Experiment type: <strong>{{ etype }}</strong></h6>
+      <h6 class="text-left">Experiment category: <strong>{{ ecat }}</strong></h6>
+    </div>
+    <div class="col-lg-1">
+    </div>
+   </div>
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		
+  <table style="width:100%" class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">sample code</th>
+        <th scope="col">protein conc</th>
+        <th scope="col" style="width:17%">user-estimated injections <red>can edit if estimated wrong</red></th>
+        <th scope="col" style="width:40%">list of requested bench processes</th>
+        <th scope="col" style="width:20%"><red>bench method (set at current value, if any)</red></th>
+        <th scope="col" style="width:20%">previous staff-updated injections (if different)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sublist in table_rows %}
+        {% set outer_loop = loop %}
+	  <tr>
+		<td><input type="text" class="form-control" name="scode_{{ sublist[0] }}" id="scode_{{ sublist[0] }}" value="{{ sublist[0] }}" readonly></td>
+		<td><input type="text" class="form-control" name="pconc_{{ sublist[0] }}" id="pconc_{{ sublist[0] }}" value="{{ sublist[1] }}" readonly></td>
+		
+		
+		<td><select class="form-select" name="estinj_{{ sublist[0] }}" id="estinj_{{ sublist[0] }}" required>
+			<option selected="selected" disable="disabled" value="{{ updt_injs[outer_loop.index0] if updt_injs else sublist[2] }}">{{ updt_injs[outer_loop.index0] if updt_injs else sublist[2] }}</option>
+			  <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			  <option value="5">5</option>
+			  <option value="6">6</option>
+			  <option value="7">7</option>
+			  <option value="8">8</option>
+			  <option value="9">9</option>
+			  <option value="10">10</option>
+		    </select>
+		</td>
+
+		
+		<td><input type="text" class="form-control" name="rqmths_{{ sublist[0] }}" id="rqmths_{{ sublist[0] }}" value="{{ sublist[3] }}" readonly></td>
+		<td><select class="form-select" name="bmeth_{{ sublist[0] }}" id="bmeth_{{ sublist[0] }}" required>
+			<option selected="selected" disable="disabled" value="{{ sublist[4] if sublist[4] }}">{{ sublist[4] if sublist[4] }}</option>
+	 	      {% for method in bench_methods %}
+			  <option value="{{ method }}">{{ method }}</option>
+			  {% endfor %}
+		    </select>
+		</td>
+	  <td><input type="text" class="form-control" name="updtinjs_{{ sublist[0] }}" id="updtinjs_{{ sublist[0] }}" value="{{ sublist[5] }}" readonly></td>
+      </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+  
+  <div class="col-lg-4 pt-3">
+    <input type="submit" name="submit_method" value="send benchwork methods to the database">
+  </div>
+
+</form>
+
+</div>
+
+
+
+{% endblock %}

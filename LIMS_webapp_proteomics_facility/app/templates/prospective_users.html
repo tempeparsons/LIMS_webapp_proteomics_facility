@@ -1,0 +1,158 @@
+{% extends 'baseexternal.html' %}
+
+{% block extrascript %}
+
+
+<script>
+
+function set_email_output(){
+	var email_input = document.getElementById("email");
+    var position = document.getElementById("position");
+    var selectedOption = position.options[position.selectedIndex];
+    var positionValue = selectedOption.getAttribute("value");
+    var email_output = document.getElementById("PIemail");
+    if(positionValue=="PI/Project_Lead"){
+    	email_output.value = email_input.value;
+    }
+    else if(positionValue_edit != "PI/Project_Lead"){
+    	email_output.value = "";
+    }   
+}
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-4 pb-4 border-bottom border-type1">
+	<div class="row text-center pb-2">
+    <h4><strong>Thank you for your interest in the CIMR proteomics facility</strong></h4>
+	</div>
+	
+  	<div class="row pt-2">
+  	<div class="col-lg-10 mx-auto">
+    <h5>Our proteomics facility is open to research groups throughout the University of Cambridge, as well as other academic and commercial enterprises. You can discover more about us by  looking at our <a href={{url_for('instrumentation')}}><black>instrumentation</black></a>, <a href={{url_for('services')}}><black>services</black></a> and <a href={{url_for('prices')}}><black>pricing</black></a> pages.</h5>
+    <br>
+    <h5 class="text-center">If you would like to be registered, please fill out the form below.</h5>
+    <h5 class="text-center">After you have been registered, you can set yourself a password at the <a href={{url_for('user_login')}}><black>Registered Users</black></a> page.</h5>
+    </div>
+    </div>  
+</div>
+
+<div class="container pt-4 border-bottom border-type2">
+<h5 class="text-center"><strong>User Registration Form:</strong></h5> 
+  <div class="row pt-2">
+    <div class="col">
+    <h6>Please note that each email address can only be registered once. The * symbol is not permitted in email addresses. </h6> 
+    <h6><strong>Researchers:</strong> you must be associated with a PI or project lead who's already registered <strong>and has logged in previously</strong>.</h6>
+  </div>
+
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-3 pt-3">
+  
+    <div class="col">
+      <input class="form-control" type="text" name="fname" id="fname" placeholder="first name" value="{{ fn if fn }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    <div class="col">
+      <input class="form-control" type="text" name="lname" id="lname" placeholder="last name" value="{{ ln if ln }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    <div class="col">
+      <input class="form-control" type="text" pattern="[^\s]+" name="email" id="email" placeholder="email" value="{{ em if em }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    
+	<input class="form-control" type="hidden" name="access_level" id="access_level" placeholder="" value="USER"> 
+	     
+    <div class="col">
+      <select class="form-select" name="position" id="position" value="" onChange="return set_email_output()">
+      <option selected="selected" disable="disabled" value="{{ p if p }}">{{ p if p else 'select position:' }}</option>
+          {% for position in ps  %}
+              <option value="{{ position }}">{{ position }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    
+    
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" name="PIemail" id="PIemail" placeholder="PI/project lead's email" value="{{ gid if gid }}" required>
+	</div>
+	
+    
+    <div class="col">
+      <input class="form-control" type="text" name="institute_name" id="institute_name" placeholder="institute name" value="{{ instn if instn }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+
+    
+    <div class="col">
+      <select class="form-select" name="institute_type" id="institute_type" placeholder="institute type" required>
+	  <option selected="selected" disable="disabled" value="{{ instt if instt }}">{{ instt if instt else 'institute type:' }}</option>
+          {% for type in instts  %}
+              <option value="{{ type }}">{{ type }}</option>
+          {% endfor %}
+	  </select>
+ 	</div>
+  </div>
+  
+  <div class="row pt-2">
+    <h6>Cambridge University users are required to provide a grant code for billing purposes.</h6>
+    <h6> You can associate up to three Grant Codes with a PI/project lead's email either now or after logging in.</h6>
+    <form name="form" action='' method='post' was-validated>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  </div>
+  
+  <div class="row pt-2">
+  	<div class="col-lg-3">
+      <div class="input-group">
+      <span class="input-group-text">1.</span>
+      <input class="form-control" type="text" pattern="[^,]+" name="grant1" id="grant1" placeholder="grant code 1" value="{{ ge[0] if ge }}">
+      <input class="form-control" type="number" name="year1" id="year1" placeholder="start year 1" value="{{ ye[0] if ye }}">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="input-group">
+	  <span class="input-group-text">2.</span>
+      <input class="form-control" type="text" pattern="[^,]+" name="grant2" id="grant2" placeholder="grant code 2" value="{{ ge[1] if ge }}">
+      <input class="form-control" type="number" name="year2" id="year2" placeholder="start year 2" value="{{ ye[1] if ye }}">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="input-group">
+      <span class="input-group-text">3.</span>
+      <input class="form-control" type="text" pattern="[^,]+" name="grant3" id="grant3" placeholder="grant code 3" value="{{ ge[2] if ge }}">
+      <input class="form-control" type="number" name="year3" id="year3" placeholder="start year 3" value="{{ ye[2] if ye }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-2">
+    <div class="col pt-4 pb-3">
+	  <input type="submit" name="register" value="Register these details">
+    </div>
+    <div class="col pt-4 pb-3">
+	  <h6><strong><green>{{ msg0 }}</green></strong></h6>
+	  <h6><strong><red>{{ msg }}</red></strong></h6>
+	</div>
+
+  </div>
+  </form>
+
+  <div class="row pt-3">
+	<h6>facility email: <blue>proteomics.portal@cimr.cam.ac.uk</blue></h6>
+	<h6>facility telephone: <blue>+44 (0)1223 763 361</blue></h6>
+  </div>
+</div> 
+
+{% endblock %}
+

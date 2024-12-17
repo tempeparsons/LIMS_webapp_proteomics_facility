@@ -1,0 +1,70 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+
+<script>
+/*
+function multiply() { 
+  const hours = document.getElementById('hours').value || 0; 
+  const anltype = document.getElementById("analysis_type").options[document.getElementById("analysis_type").selectedIndex].value || 0;
+  const insttype = document.getElementById("institute_type").options[document.getElementById("institute_type").selectedIndex].value || 0;
+  const product = parseFloat(hours) * parseFloat(anltype);
+  const finalproduct = product * parseFloat(insttype);
+  document.getElementById('data_total').innerHTML = finalproduct;
+}
+*/
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="row">
+    <div class="col  pt-3 pb-2">
+      <h5 class="text-left">Here you can hit the button what does the addition of the components parts of an experiments cost.</h5>
+    </div>
+  </row>
+</div>
+
+
+<div class="container">
+	
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Costs for component parts of this experiment:</blue></strong></h6>
+  </div>
+  
+  <table style="font-size:14px;" class="table table-sm">
+  
+    <thead>
+      <tr>
+        <th scope="col">expt code</th>
+        <th scope="col">sample code</th>
+        <th scope="col">anticipated injections</th>
+        <th scope="col">chargeable injections</th>
+        <th scope="col">standard bench costs</th>
+        <th scope="col">method category</th>
+        <th scope="col">instrument cost per sample</th>
+        <th scope="col">standard analysis costs</th>
+        <th scope="col">sample subtotal</th>
+      </tr>
+    </thead>
+        
+  </table>  
+    
+  <div class="col-lg-2">
+    <input type="submit" name="submit_all" value="Commit totals to database">
+      <h6 class="pt-3"><strong><red>{{ msg0 }}</red></strong></h6>
+      <h6 class="pt-3"><strong><green>{{ msg1 }}</green></strong></h6>
+  </div>
+
+  </div>
+
+</form>
+
+</div>
+
+{% endblock %}

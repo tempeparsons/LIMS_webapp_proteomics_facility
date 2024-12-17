@@ -1,0 +1,60 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="col border-bottom border-type1 pt-3 pb-1">
+  
+    <h5 class="text-left">Experiment <strong>{{ ecode }}</strong> for <strong>{{ fn }} {{ ln }}</strong>.</h5>
+    <h5> This experiment is for:<strong> {{ etype }} </strong>. If there's no benchwork requested, there's nothing to fill in on this page.</h5>
+    <br>
+    <h6> For more details, select the appropriate tables from the table-by-table database viewer (bottom of the 'facility home' page).</h6>
+    <h6> The number of hours doesn't impact on the cost to the researcher (bench costs are fixed for each experiment category) but it's useful information about facility capacity.</h6>
+    <h6> <strong>You can change the number of bench hour as many time as you like using positive or negative numbers (until the experiment is signed off by Robin)</strong></h6>
+    <br>
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h5 class="text-left"><blue><strong>Bench hours</strong></blue></h5>
+  </div>
+  
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div  class="row pt-3">
+    <div class="col-lg-3">
+      <p>Previous entry (hrs) if added already</p>
+    </div>
+    <div class="col-lg-6">
+      <p><red>Hours to add to previous entry</red> (use negative numbers to reduce number of hours)</p>
+    </div>
+  </div>
+  <div class="row pb-5">
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" name="prev_hrs" id="prev_hrs" value="{{ prev_hrs }}" readonly>
+	</div>
+	<div class="col-lg-1">
+	</div>
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" type="number" step='0.5' name="curr_hrs" id="curr_hrs" required>
+	</div>
+  </div>
+  
+  <h6 class="text-left">Once you're done filling in the form you can submit this information to the database:</h6>
+  <div class="col pb-4 pt-1">
+    <input type="submit" name="submit_hours" value="submit bench hours">
+  </div>
+  
+  <h5><red>{{ msg }}</red></h5>
+    
+  </form>
+</div>
+
+
+
+{% endblock %}

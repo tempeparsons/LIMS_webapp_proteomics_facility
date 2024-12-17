@@ -1,0 +1,39 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+<div class="tableFixHead">
+<table style="width:100%; font-size:80%;" class="table table-sm">
+
+  <thead>
+    <tr>
+      {% for name in cols %}
+      <th scope="col">{{ name }}</th>
+	  {% endfor %}
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      {% for cell in row %}
+        <td>{{ cell }}</td>
+	  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  
+</table>
+</div>
+
+</div>
+
+{% endblock %}

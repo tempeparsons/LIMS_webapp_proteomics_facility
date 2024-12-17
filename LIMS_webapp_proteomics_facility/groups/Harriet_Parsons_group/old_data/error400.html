@@ -1,0 +1,16 @@
+{% extends "baseerror.html" %}
+
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center border-bottom border-type1 pt-2 pb-3">
+  <div class="col-lg-4 pt-2 pb-2 align-self-center">
+    <h4 class="text-center"><blue>BAD REQUEST ERROR.</blue></h4>
+    <h6 class="text-center">the server cannot or will not process the request due to something that is perceived to be a client error (for example, malformed request syntax, invalid request message framing, or deceptive request routing).</h6>
+    <h6 class="text-center" id='welcome'><a href="{{ url_for('index') }}">go back to the Main Home Page (this will log you out).</a></h6>
+  </div>
+</div>
+{% endblock %}
+
+

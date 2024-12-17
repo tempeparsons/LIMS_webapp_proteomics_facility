@@ -1,0 +1,209 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+    
+{% block content %}
+
+<div class="container">
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+  
+  <h5 class="text-left">You're submitting an experiment on behalf of <strong><blue>{{ em }}</blue></strong>. If this isn't the right user, go back one page and check your menu selection.</h5>
+  <br>
+  
+  
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="row pb-3 pt-3">
+    <div class="col-lg-6">
+      <h6>Short <strong>experiment code</strong> that fits on a tube and a <strong>grant/payment category</strong>.</h6>
+      <h6>
+    </div>
+    <div class="col-lg-2 dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Used expt codes</button>
+        <ul class="dropdown-menu">
+          {% for code in used_codes %}
+          <li><a class="dropdown-item">{{ code }}</a></li>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="col-lg-2">
+	  <div class="form-outline mb-1">
+        <input type="text" minlength="1" maxlength="6" name="exp_code" id="exp_code" class="form-control" placeholder="new expt code, 1-6 ch." value="{{ ecode if ecode }}" required>
+      </div>
+  	</div>
+    <div class="col-lg-2">
+	  <div class="form-outline">
+      <select style="font-size:14px;" class="form-select" name="gcode" id="gcode" required>
+      <option selected="selected" disable="disabled" value="{{ gcode if gcode }}">{{ gcode if gcode else 'select payment method:' }}</option>
+          {% for grant in grants %}
+              <option value="{{ grant }}">{{ grant }}</option>
+          {% endfor %}
+        </select>
+      </div>
+  	</div>
+  </div>
+
+
+  <div class="row pb-3">
+    <div class="col-lg-6 pt-1">
+      <h6>Select the user a <strong>request type</strong>: </h6>
+      <h6>Then give them an <strong>experiment category</strong>: </h6>
+      <h6>Finally, add their requested <strong>search database(s)</strong>: </h6>
+    </div>
+    <div class="col-lg-2">
+	  <div class="form-outline">
+        <label for="etype">Experiment type:</label>
+        <select style="font-size:14px;" class="form-select" name="etype" id="etype" required>
+        <option selected="selected" disable="disabled" value="{{ etype if etype }}">{{ etype if etype else 'select:' }}</option>
+          {% for exp in exptypes %}
+              <option value="{{ exp }}">{{ exp }}</option>
+          {% endfor %}
+        </select>
+      </div>
+  	</div>
+    <div class="col-lg-2">
+	  <div class="form-outline">
+        <label for="ecat">Category:</label>
+        <select style="font-size:14px;" class="form-select" name="ecat" id="ecat" required>
+        <option selected="selected" disable="disabled" value="{{ ecat if ecat }}">{{ ecat if ecat else 'select:' }}</option>
+          {% for exp in expcats %}
+              <option value="{{ exp }}">{{ exp }}</option>
+          {% endfor %}
+        </select>
+      </div>
+  	</div>
+    <div class="col-lg-2">
+	  <div class="form-outline">
+        <label for="dbcat">Database(s):</label>
+        <select style="font-size:14px;" class="form-select" name="dbcat" id="dbcat" data-bs-toggle="tooltip" data-bs-placement="top" title="Ctrl+click for multiple" multiple required>
+        <option selected="selected" disable="disabled" value="{{ dbcat if dbcat }}">{{ dbcat if dbcat else 'No DB search' }}</option>
+          {% for db in dbcats %}
+              <option value="{{ db }}">{{ db }}</option>
+          {% endfor %}
+        </select>
+      </div>
+  	</div>
+  	
+  </div>
+
+  <div class="row pb-4">
+    <div class="col-lg-6">
+      <h6><strong>Get as much info as you reasonably can out fo the user about the experiment structure etc and note it down here:</strong></h6>
+    </div>
+    <div class="col-lg-6">
+    <textarea style="font-size:14px;" rows="2" maxlength="100" class="form-control p-1 m-0" value="{{ enotes if enotes }}" name="enotes" id="enotes" placeholder="e.g.   'controls=c1,c2,c3 treated=t1,t2,t2'   or  '18plex-labelled'    or   'DIA only'    or   'append sequence >ABCDEFGHIJK to selected database'  or  'only use Proteome Discoverer'">{{ enotes if enotes }}</textarea>
+  	</div>
+  </div>
+<br>
+
+<div class="col border-bottom border-type1 pt-3">
+      <h5 class="text-left">If user <strong><blue>{{ em }}</blue></strong> is submitting samples, fill in their samples details (set the row number first). If this is data-only, just hit 'submit all'.</h5>
+</div>
+
+<div class="container pt-3">
+<table style="font-size:14px;" class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">sample code (alphanumeric)</th>
+      <th scope="col">protein conc. (ug/ul) </th>
+      <th scope="col">number of injections</th>
+      <th scope="col">run_gel</th>
+      <th scope="col">in-gel digest</th>
+      <th scope="col">S-trap digest</th>
+      <th scope="col">in-solution digest</th>
+      <th scope="col">LysC digest</th>
+      <th scope="col">PO4-enrichment</th>
+      <th scope="col">labelling</th>
+      <th scope="col">fractionation</th>
+      <th scope="col">intact mass</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  {% for sc, pc, inj, rg, ingel, strap, insol, lysc, po4, label, frac, intm in nameset %}
+  
+    <tr>
+      <th scope="row">
+        <input style="font-size:14px;" type="" maxlenth="4" class="form-control p-1 m-0 border border-warning" name="{{ sc }}" placeholder="max 4 ch. ">
+      </th>
+     <th scope="row">
+        <input style="font-size:14px;" type="number" min="0.1" step="0.1" class="form-control p-1 m-0 border border-warning" name="{{ pc }}" placeholder="e.g. 0.8">
+      </th>
+      <th scope="row">
+        <input style="font-size:14px;" type="number" min="0" class="form-control p-1 m-0 border border-warning" name="{{ inj }}" placeholder="e.g. 12">
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ rg }}" id="rg">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ ingel }}" id="ingel">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ strap }}" id="strap">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ insol }}" id="insol">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ lysc }}" id="lysc">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ po4 }}" id="po4">
+      </div>
+      </th>
+      <th scope="row">
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ label }}" id="label">
+      </div>
+      </th>
+      <th scope="row">
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="{{ frac }}" id="fractionate">
+      </div>
+      </th>
+      <th scope="row">
+      <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="{{ intm }}" id="intact">
+      </div>
+      </th>
+     </tr>
+    
+  {% endfor %}
+   
+  </tbody>
+</table>
+
+<div class="row">
+    <div class="col">
+      <input type="submit" name="tenrows" value="Add Ten Rows">
+      <input type="submit" name="addrow" value="Add Row">
+      {% if nameset|length > 1 %}
+      <input type="submit" name="deleterow" value="Delete Row">
+      {% endif %}
+      <input type="submit" name="submit_all" value="Submit All">
+      <input type="hidden" name="nrows" value="{{ nameset|length }}">
+    </div>
+  </form>
+</div>
+</div>
+
+{% endblock %}
+

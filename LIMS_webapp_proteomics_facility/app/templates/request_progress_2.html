@@ -1,0 +1,149 @@
+{% extends 'baseuser.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+  
+  <div class="col-lg-8 border-bottom border-type1 mb-1">
+    <h5 class="text-left"><blue><strong>Details about experiment request</strong></blue></h5>
+  </div>
+  
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">email</th>
+      <th scope="col">ecode</th>
+      <th scope="col">etype</th>
+      <th scope="col">expt_type</th>
+      <th scope="col">date req</th>
+      <th scope="col">arrived y/n?</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      <tr>{% for entry in t1 %}<td>{{ entry }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>Sample preparation progress (if requested)</strong></blue></h5>
+  </div>
+
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">smpl_code</th>
+      <th scope="col">protein conc. </th>
+      <th scope="col">user-estimated injections</th>
+      <th scope="col">requested bench work</th>
+      <th scope="col">sample prep'n methods (if assigned yet)</th>
+      <th scope="col">actual injections from this sample</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for row in t2 %}
+      <tr>
+      {% for cell in row %}
+      <td>{{ cell }}</td>
+      {% endfor %}
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>Mass spectrometry progress (if requested)</strong></blue></h5>
+  </div>
+
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">first instrument method assigned</th>
+      <th scope="col">second method (if any)</th>
+      <th scope="col">third method (if any)</th>
+      <th scope="col">fourth method (if any)</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      <tr>{% for entry in t3 %}<td>{{ entry }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+
+
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>Custom data analysis progress (if requested)</strong></blue></h5>
+  </div>
+
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">analysis hours (to date)</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      <tr>{% for entry in t4 %}<td>{{ entry }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>Expenses to date</strong></blue></h5>
+  </div>
+
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">bench cost</th>
+      <th scope="col">instrument cost</th>
+      <th scope="col">instrument wash cost</th>
+      <th scope="col">database search cost</th>
+      <th scope="col">bespoke analysis cost</th>
+      <th scope="col">extras items cost</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      <tr>{% for entry in t5 %}<td>{{ entry }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+
+  <div class="col-lg-8 border-bottom border-type1 pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>Completion</strong></blue></h5>
+  </div>
+
+  <table style="width:80%; font-size:80%;" class="table table-sm ms-5">
+  <thead>
+    <tr>
+      <th scope="col">mass spectrometry signed off?</th>
+      <th scope="col">custom data analysis signed off?</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      <tr>{% for entry in t6 %}<td>{{ entry }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+{% endblock %}

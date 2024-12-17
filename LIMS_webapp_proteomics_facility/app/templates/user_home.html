@@ -1,0 +1,33 @@
+{% extends 'baseuser.html' %}
+
+
+{% block content %}
+
+<div class="container d-flex justify-content-center pt-3 mb-4">
+  <div class="col-lg-6 border-bottom border-type1">
+    <h4 class="text-center">Welcome to the proteomics facility user home page!</h4>
+  </div>
+</div>
+  
+<div class="container border-bottom border-type2">  
+  	  <h6 class="text-left">If you are registered in our system and are ready to send us a new experiment, please fill out the <a class="btn btn-outline-secondary btn-sm" href="{{url_for('experiment_request')}}">EXPERIMENT REQUEST FORM</a>.</h6>
+      <br>
+      <h6 class="text-left">Before you initiate an experiment, please read <a class="btn btn-outline-secondary btn-sm" href="{{url_for('experiment_advice')}}">THIS ADVICE</a> on describing samples and choosing experiment codes and data analysis options.</h6>
+      <br>
+      <h6 class="text-left">You can keep track of your experiment requests <a class="btn btn-outline-secondary btn-sm" href="{{url_for('request_progress_1')}}">HERE</a>.</h6>
+      <br>
+      <h6 class="text-left">If you're registered as a PI or Project Lead, you can track your group's/project expenditure <a class="btn btn-outline-secondary btn-sm" href="{{url_for('group_expenses')}}">HERE</a>.</h6>
+      <br>
+      <h6 class="text-left">All group information and results outputs (sample name lists, graphs, spreadsheets etc.) can be accessed <a class="btn btn-outline-secondary btn-sm" href="{{url_for('group_data')}}">HERE</a>.</h6>
+      <br>
+      <h6 class="text-left">Cambridge University users can add new grant numbers <a class="btn btn-outline-secondary btn-sm" href="{{url_for('add_grant')}}">HERE</a>.</h6>
+	  <br>
+      <h6 class="text-left">if you've got any questions, please email us: <blue>proteomics.portal@cimr.cam.ac.uk</blue></h6>
+      <br>
+      <br>
+</div>
+
+
+{% endblock %}
+
+    

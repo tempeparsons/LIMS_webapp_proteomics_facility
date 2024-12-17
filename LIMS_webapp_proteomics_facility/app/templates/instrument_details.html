@@ -1,0 +1,165 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+
+  <div class="row pb-3">
+    <div class="col-lg-7 pt-1 pb-1">
+      <h5 class="text-left"><strong>Update instrument methods for:</strong></h5>
+      <h6 class="text-left">Experiment code: <strong>{{ ecode }}</strong></h6>
+      <h6 class="text-left">Researcher name: <strong>{{fn }} {{ ln }}</strong>, group leader email <strong>{{ gid }}</strong>: </h6>
+      <h6 class="text-left">Experiment type: <strong>{{ etype }}</strong></h6>
+      <h6 class="text-left">Experiment category: <strong>{{ ecat }}</strong></h6>
+    </div>
+  </div>
+
+
+  <div class="row pb-3">
+    <div class="col-lg-12 border-bottom border-type1 pt-1 pb-2">
+      <h5 class="text-left">This database info for {{ ecode }} might be useful for updating instrument requirements:</h5>
+      <table style="width:50%" class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">sample code</th>
+            <th scope="col">bench method</th>
+            <th scope="col">anticipated injections</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tup in dbinfo %}
+            <tr>
+              {% for entry in tup %}
+                <td style="text-align:left">{{ entry }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}  
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="col pt-2 mb-1">
+    <h5 class="text-left"><blue><strong>How many different instrument methods (choose up to 4), database searches and washes are associated with this experiment?</strong></blue></h5>
+    <h6 class="text-left"><strong>If you ran the same method twice, just increase the number of injections for that method-type</strong></h6>
+  </div>
+  
+	  <div class="row pt-3">
+		<div class="col-lg-3">
+		  <select class="form-select" name="imeth1" id="imeth1" required>
+			<option selected="selected" disable="disabled" value="{{ m[0] if m[0] }}">{{ m[0] if m[0] else "instrument method 1" }}</option>
+	 	      {% for method in instr_methods %}
+			    <option value="{{ method }}">{{ method }}</option>
+			  {% endfor %}
+		  </select>
+		</div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="ninj1" id="ninj1" value="{{ i[0] if i[0] }}" placeholder="{{ i[0] if i[0] else "no. injections 1" }}" required</input>
+		</div>
+		<div class="col-lg-2">
+		  <select class="form-select" name="db1" id="db1" required>
+	        <option selected="selected" disable="disabled" value="{{ s[0] if s[0] }}">{{ s[0] if s[0] else "db search yes/no" }}</option>
+	        <option value="Yes">Yes</option>
+	        <option value="No">No</option>
+	      </select>
+	    </div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="wsh1" id="wsh1" value="{{ w[0] if w[0] }}" placeholder="{{ w[0] if w[0] else "washes 1" }}" required</input>
+		</div>
+	  </div>
+
+	  <div class="row">
+		<div class="col-lg-3">
+		  <select class="form-select" name="imeth2" id="imeth2">
+			<option selected="selected" disable="disabled" value="{{ m[1] if m[1] }}">{{ m[1] if m[1] else "instrument method 2" }}</option>
+	 	      {% for method in instr_methods %}
+			    <option value="{{ method }}">{{ method }}</option>
+			  {% endfor %}
+		  </select>
+		</div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="ninj2" id="ninj2" value="{{ i[1] if i[1] }}" placeholder="{{ i[1] if i[1] else "no. injections 2" }}"</input>
+		</div>
+		<div class="col-lg-2">
+		  <select class="form-select" name="db2" id="db2">
+	        <option selected="selected" disable="disabled" value="{{ s[1] if s[1] }}">{{ s[1] if s[1] else "db search yes/no" }}</option>
+	        <option value="Yes">Yes</option>
+	        <option value="No">No</option>
+	      </select>
+	    </div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="wsh2" id="wsh2" value="{{ w[1] if w[1] }}" placeholder="{{ w[1] if w[1] else "washes 2" }}"</input>
+		</div>
+	  </div>
+
+	  <div class="row">
+		<div class="col-lg-3">
+		  <select class="form-select" name="imeth3" id="imeth3">
+			<option selected="selected" disable="disabled" value="{{ m[2] if m[2] }}">{{ m[2] if m[2] else "instrument method 3" }}</option>
+	 	      {% for method in instr_methods %}
+			    <option value="{{ method }}">{{ method }}</option>
+			  {% endfor %}
+		  </select>
+		</div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="ninj3" id="ninj3" value="{{ i[2] if i[2] }}" placeholder="{{ i[2] if i[2] else "no. injections 3" }}"</input>
+		</div>
+		<div class="col-lg-2">
+		  <select class="form-select" name="db3" id="db3">
+	        <option selected="selected" disable="disabled" value="{{ s[2] if s[2] }}">{{ s[2] if s[2] else "db search yes/no" }}</option>
+	        <option value="Yes">Yes</option>
+	        <option value="No">No</option>
+	      </select>
+	    </div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="wsh3" id="wsh3" value="{{ w[2] if w[2] }}" placeholder="{{ w[2] if w[2] else "washes 3" }}"</input>
+		</div>
+	  </div>
+
+	  <div class="row pb-4">
+		<div class="col-lg-3">
+		  <select class="form-select" name="imeth4" id="imeth4">
+			<option selected="selected" disable="disabled" value="{{ m[3] if m[3] }}">{{ m[3] if m[3] else "instrument method 4" }}</option>
+	 	      {% for method in instr_methods %}
+			    <option value="{{ method }}">{{ method }}</option>
+			  {% endfor %}
+		  </select>
+		</div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="ninj4" id="ninj4" value="{{ i[3] if i[3] }}" placeholder="{{ i[3] if i[3] else "no. injections 4" }}"</input>
+		</div>
+		<div class="col-lg-2">
+		  <select class="form-select" name="db4" id="db4">
+	        <option selected="selected" disable="disabled" value="{{ s[3] if s[3] }}">{{ s[3] if s[3] else "db search yes/no" }}</option>
+	        <option value="Yes">Yes</option>
+	        <option value="No">No</option>
+	      </select>
+	    </div>
+		<div class="col-lg-2">
+          <input type="number" min="0" class="form-control p-1 m-0" name="wsh4" id="wsh4" value="{{ w[3] if w[3] }}" placeholder="{{ w[3] if w[3] else "washes 4" }}"</input>
+		</div>
+	  </div>
+
+		  
+  <div class="col pb-4 pt-1">
+    <input type="submit" name="submit_instr_meths" value="submit instrument methods">
+  </div>
+    
+  </form>
+</div>
+
+
+
+{% endblock %}

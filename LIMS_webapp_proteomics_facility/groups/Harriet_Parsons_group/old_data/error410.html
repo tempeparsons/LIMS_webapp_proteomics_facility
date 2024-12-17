@@ -1,0 +1,11 @@
+{% extends "baseerror.html" %}
+
+
+{% block title %}Gone{% endblock %}
+
+{% block content %}
+  <h1>This page has been deleted/h1>
+  <p>Sorry, this route shouldn't still exist.</p>
+  <p><a href="{{ url_for('index') }}">go back to the Main Home Page.</a>
+{% endblock %}
+

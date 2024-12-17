@@ -1,0 +1,198 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+
+function add_bm_row() {
+  var table_bm = document.getElementById("table_bm");
+  var row_bm = table_bm.insertRow(-1);
+  var cell1_bm = row_bm.insertCell(0);
+  var cell2_bm = row_bm.insertCell(1);
+  cell1_bm.innerHTML = '<input class="param" type="text" name="new_bmeth_name" placeholder="enter method name" required/>';
+  cell2_bm.innerHTML = '<input class="param" type="number" name="new_bmeth_mins" placeholder="enter method time" required/>';
+  const button_bm = document.querySelector('button[name="add_bm"]');
+  button_bm.disabled = true;
+}
+
+
+function add_idm_row() {
+  var table_idm = document.getElementById("table_idm");
+  var row_idm = table_idm.insertRow(-1);
+  var cell1_idm = row_idm.insertCell(0);
+  var cell2_idm = row_idm.insertCell(1);
+  var cell3_idm = row_idm.insertCell(2);
+  cell1_idm.innerHTML = '<input class="param" type="text" name="new_idmeth_name" placeholder="enter method name" required/>';
+  cell2_idm.innerHTML = '<input class="param" type="number" name="new_imeth_mins" placeholder="enter instr time" required/>';
+  cell3_idm.innerHTML = '<input class="param" type="number" name="new_dmeth_mins" placeholder="enter search time" required/>';
+  const button_idm = document.querySelector('button[name="add_idm"]');
+  button_idm.disabled = true;
+}
+
+
+function add_dbc_row() {
+  var table_dbc = document.getElementById("table_dbc");
+  var row_dbc = table_dbc.insertRow(-1);
+  var cell_dbc = row_dbc.insertCell(0);
+  cell_dbc.innerHTML = '<input class="param" type="text" name="new_dbc" placeholder="enter species/dbase name" required/>';
+  const button_dbc = document.querySelector('button[name="add_dbc"]');
+  button_dbc.disabled = true;
+}
+
+
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="col">
+    <h5><span style="color: red">{{ msg0 }}</span></h5>
+    <h5><span style="color: green">{{ msg1 }}</span></h5>
+  </div>
+  
+  <div class="row pt-2 pb-2">  
+  	<h5 class="text-left"><strong><blue>HERE YOU CAN ADD TO BENCH AND INSTRUMENT METHODS, OR ADD SPECIES TO THE LIST OF SEARCHABLE DATABASES</blue></strong></h5>
+  	<p style="color: red">New items can only be deleted using SQL commands directly on the database. So, don't submit anything unless you really, really mean it. Names can't be repeated.</p>
+  </div>
+  
+
+  <div class="row pt-2">  
+  	<h6 class="text-left"><strong><blue>Benchwork methods (can't add more than one at a time):</blue></strong></h6>
+  </div>
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <table style="width:40%" class="table table-sm" id="table_bm">
+  
+    <thead>
+      <tr>
+        <th scope="col">bench activity</th>
+        <th scope="col">time (min)</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in bmrows %}
+      <tr>
+        {% set outer_loop = loop %}
+        {% for item in row %}
+        <td style="text-align:left" name="bm_{{ outer_loop.index0 }}" id="bm_{{ outer_loop.index0 }}">{{ item }}</td> 
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+
+  <div class="row pb-5">
+    <div class="col-lg-2">
+      <button type="button" name="add_bm" onclick="add_bm_row()">Add one row</button>
+    </div>
+    <div class="col-lg-3"> 
+      <input type="submit" name="add_bench_method" value="submit new bench method">
+    </div>
+
+  </div>
+  
+  <div>
+  
+  </form>
+
+  
+
+
+  <div class="row pt-2">  
+  	<h6 class="text-left"><strong><blue>Instrument methods (can't add more than one at a time):</blue></strong></h6>
+  </div>
+
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <table style="width:50%" class="table table-sm" id="table_idm">
+  
+    <thead>
+      <tr>
+        <th scope="col">instrument method</th>
+        <th scope="col">instr time (min)</th>
+        <th scope="col">data-search time (min) </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in idmrows %}
+      <tr>
+        {% for item in row %}
+        <td style="text-align:left">{{ item }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+  
+  <div class="row pb-5">
+    <div class="col-lg-2">
+      <button type="button" name="add_idm" onclick="add_idm_row()">Add one row</button>
+    </div>
+    <div class="col-lg-3"> 
+      <input type="submit" name="add_instr_data_method" value="submit new instr_data method">
+    </div>
+  </div>
+  
+  </form>
+
+
+
+
+  <div class="row pt-2">  
+  	<h6 class="text-left"><strong><blue>Available databases (can't add more than one at a time):</blue></strong></h6>
+  </div>
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <table style="width:20%" class="table table-sm" id="table_dbc">
+  
+    <thead>
+      <tr>
+        <th scope="col">species</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in dbcrows %}
+      <tr>
+        {% for item in row %}
+        <td style="text-align:left">{{ item }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+  
+  <div class="row pb-5">
+    <div class="col-lg-2">
+      <button type="button" name="add_dbc" onclick="add_dbc_row()">Add one row</button>
+    </div>
+    <div class="col-lg-3"> 
+      <input type="submit" name="add_dbcategory" value="submit new database option">
+    </div>
+  </div>
+  
+  </form>
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}
+

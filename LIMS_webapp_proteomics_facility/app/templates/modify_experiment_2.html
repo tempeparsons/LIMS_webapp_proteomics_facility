@@ -1,0 +1,70 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+
+  <div class="row pb-5">
+    <div class="col border-bottom border-type1 pt-1 pb-2">
+     <h5 class="text-left">Once bench methods have been assigned to samples, they cannot be deleted. Likewise if the sample has been injected, it cannot be deleted. Then the only option is to delete the whole experiment. If an experiment contains a single sample, please delete it at 'Delete Expt', not here.</h5>
+      <h5 class="text-left">Delete samples within experiment:</h5>
+      <h6 class="text-left">Experiment code: <strong>{{ ecode }}</strong></h6>
+      <h6 class="text-left">Researcher name: <strong>{{fn }} {{ ln }}</strong>, group leader email <strong>{{ gid }}</strong>: </h6>
+      <h6 class="text-left">Experiment type: <strong>{{ etype }}</strong></h6>
+    </div>
+    <div class="col-lg-1">
+    </div>
+   </div>
+  
+  <form name="form" action="" method='post' validate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		
+  <table style="width:90%" class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">sample code</th>
+        <th scope="col">protein conc</th>
+        <th scope="col">estimated injections</th>
+        <th scope="col" style="width:40%">list of requested bench processes</th>
+        <th scope="col" style="width:30%">status</th>
+        <th scope="col" style=""><red>Delete?</red></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sublist in table_rows %}
+	  <tr>
+		<td><input type="text" class="form-control" name="scode_{{ sublist[0] }}" id="scode_{{ sublist[0] }}" value="{{ sublist[0] }}" readonly></td>
+		<td><input type="text" class="form-control" name="pconc_{{ sublist[0] }}" id="pconc_{{ sublist[0] }}" value="{{ sublist[1] }}" readonly></td>
+		<td><input type="text" class="form-control" name="estinj_{{ sublist[0] }}" id="estinj_{{ sublist[0] }}" value="{{ sublist[2] }}" readonly></td>
+		<td><input type="text" class="form-control" name="rqmths_{{ sublist[0] }}" id="rqmths_{{ sublist[0] }}" value="{{ sublist[3] }}" readonly></td>
+		<td><input type="text" class="form-control" name="status_{{ sublist[0] }}" id="status_{{ sublist[0] }}" value="{{ sublist[4] }}" readonly></td>
+		<td><select name="delete_{{ sublist[0] }}" id="delete_{{ sublist[0] }}" class="form-select" required>
+			  <option value={{ sublist[5] if sublist[5] else 'Y' }}>{{ sublist[5] if sublist[5] else 'Y' }}</option>
+			  <option value='N'>N</option>
+		    </select>
+		</td>
+      </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+  
+  <div class="col-lg-4 pt-3">
+    <input type="submit" name="delete_samples" value="delete the selected samples">
+  </div>
+
+  </form>
+</div>
+{% endblock %}
+
+

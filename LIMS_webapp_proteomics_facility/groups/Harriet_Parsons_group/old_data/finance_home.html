@@ -1,0 +1,221 @@
+{% extends 'basefinance.html' %}
+
+{% block content %}
+
+
+
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="col-lg-8 border-bottom border-type1">
+    <h4 class="text-center">Welcome to the data pages for the proteomics facility</h4>
+  </div>
+</div>
+
+
+<div class="container border-bottom border-type2 pt-4">
+
+  <p>This website sits on top of a relational database. Relational databases queries require Structured Query Lookup (SQL) langauge, and there is no single table representing financial information, so I've compiled some functions which retrieve summarised financial information. If these functions aren't providing exactly what you need, just email us.</p>
+
+  <div class="row mt-2 pt-3">
+    <h5 class="text-left"><blue>Downloading finance information:</blue></h5>
+  </div>
+      
+    
+  <div class="col-lg-6">
+    <p class="text-left">The <strong>finance</strong> output content will be formatted as shown below:</p>
+  </div>
+
+    <font size="2">
+    <table class="table table-bordered" style="width:70%">
+      <tr>
+        <th>Institute</th>
+        <th>Client type</th>
+        <th>Group Lead email</th> 
+        <th>Expt. Code</th>
+        <th>Grant Code</th>
+        <th>Dates Selected</th>
+        <th>Total Due</th>
+      </tr>
+      <tr>
+        <td>UC Davis</td>
+        <td>e.g. invoice (external academia)</td>
+        <td>GroupLead@work.com</td>
+        <td>Expt001</td>
+        <td>Grant001</td>
+        <td>LastQ_1928</td>
+        <td>$ 1 million </td>
+      </tr>
+    </table>
+    </font>
+
+
+  <div class="col pt-2">
+    <h6 class="text-left">Customise how you want to filter the table contents (select 'all_dates' from 'filter on dates' to see all results), then click 'get this table'.</h6>
+    <h6 class="text-left">Only <strong><red>one</red></strong> filter can be applied per search. Filters default to the <strong><red>last menu selected from</strong><red>.</h6>
+  </div>
+  
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-2 pt-2">
+    <div class="col-lg-2">
+      <select class="form-select" name="group_filter" id="group_filter">
+	  <option selected="selected" disable="disabled" value="">filter on group</option>
+          {% for group in finance_groupIDs %}
+              <option value="{{ group }}">{{ group }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-1 text-center">
+      <p><strong>OR</strong></p>
+    </div>
+    <div class="col-lg-2">
+      <select class="form-select" name="date_filter" id="date_filter">
+      <option selected="selected" disable="disabled" value="">filter on dates</option>
+          {% for date in date_options %}
+              <option value="{{ date }}">{{ date }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-1 text-center">
+      <p><strong>OR</strong></p>
+    </div>
+    <div class="col-lg-2">
+      <select class="form-select" name="institute_filter" id="institute_filter">
+	  <option selected="selected" disable="disabled" value="">filter on payment type</option>
+          {% for type in payment_types %}
+              <option value="{{ type }}">{{ type }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col pt-1">
+	  <input type="submit" name="finance_table" value="get this table">
+    </div>
+  
+  <div class="row pb-4">
+    <div class="col-lg-6">
+	  <h6><strong><red>{{ msg }}</red></strong></h6>
+	  <h6><strong><green>{{ msg0 }}</green></strong></h6>
+	</div>
+  </div>
+  </form> 
+
+</div>
+</div>
+
+
+<div class="container border-bottom border-type2 pt-4">
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>Downloading other data about the facility:</blue></h5>
+  </div>
+  
+  <p>Here you can download information about facility inputs and outputs. There are currently two tables to choose from.</p>
+     
+    <form name="form" action='' method='post' was-validated>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="row pb-2 pt-2">
+      
+        <div class="col-lg-6 pt-1">
+		<font size="2">
+		<table class="table table-bordered" style="width:100%">
+		  <tr>
+		    <th>Instrument method</th>
+		    <th>Minutes of run-time</th>
+		    <th>time period start</th>
+		    <th>time period end</th>
+		  </tr>
+		  <tr>
+		    <td>Single_gel_band__120</td>
+		    <td>360</td>
+		    <td>17/11/2023, 11:33:19</td>
+		    <td>17/11/2079, 11:33:19</td>
+
+		  </tr>
+		</table>
+		</font>
+		</div>
+    
+		<div class="col-lg-2">
+		  <select class="form-select" name="method_date_filter" id="method_date_filter">
+		  <option selected="selected" disable="disabled" value="">filter on dates</option>
+		      {% for date in date_options %}
+		          <option value="{{ date }}">{{ date }}</option>
+		      {% endfor %}
+		  </select>
+		</div>
+
+        <div class="col-lg-2 pt-1">
+	    <input type="submit" name="methodmins" value="get this table">
+        </div>
+
+        <div class="col-lg-2 pt-1">
+
+        </div>
+        
+      </div>
+    </form>
+    
+    <form name="form" action='' method='post' was-validated>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="row pb-2 pt-2">
+      
+        <div class="col-lg-9 pt-1">
+		<font size="2">
+		<table class="table table-bordered" style="width:100%">
+		  <tr>
+		    <th>Income total for selected time period</th>
+		    <th>Income from industry</th>
+		    <th>Income from external academic sources</th>
+		    <th>Income all internal grants</th>
+		    <th>Income internal grants pre-2022</th>
+		    <th>Income from internal grants 2022 and later</th>
+		    <th>time period start</th>
+		    <th>time period end</th>
+		  </tr>
+		  <tr>
+		    <td>30390</td>
+		    <td>12100</td>
+		    <td>14545</td>
+		    <td>2269</td>
+		    <td>3745</td>
+		    <td>1476</td>
+		    <td>01/01/2000, 00:00:01</td>
+		    <td>31/12/2100, 23:59:59</td>
+		  </tr>
+		</table>
+		</font>
+		</div>
+    
+		<div class="col-lg-2">
+		  <select class="form-select" name="source_date_filter" id="source_date_filter">
+		  <option selected="selected" disable="disabled" value="">filter on dates</option>
+		      {% for date in date_options %}
+		          <option value="{{ date }}">{{ date }}</option>
+		      {% endfor %}
+		  </select>
+		</div>
+
+        <div class="col-lg-1 pt-1">
+	    <input type="submit" name="incomesources" value="get this table">
+        </div>
+        
+      </div>
+    </form>
+    
+    
+
+
+  <div class="row pb-4">
+    <div class="col-lg-6">
+	  <h6><strong><red>{{ msg }}</red></strong></h6>
+	  <h6><strong><green>{{ msg0 }}</green></strong></h6>
+	</div>
+  </div>
+  </form> 
+
+</div>
+
+  
+
+{% endblock %}
+

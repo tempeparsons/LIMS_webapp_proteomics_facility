@@ -1,0 +1,58 @@
+{% extends 'baseuser.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+<style>
+</style>
+
+{% block content %}
+
+<div class="container d-flex justify-content-center pt-3 mb-4">
+  <div class="col-lg border-bottom border-type1">
+    <h4 class="text-center">This is the group directory for the <strong><blue>{{ fname }} {{ lname }}</blue></strong> group.</h4>
+    <br>
+    <h5 class="text-left">Current group members are: {% for member in groupmembers %}<blue>{{ member.first_name}}</blue> {% endfor %}. Any group member can see all the information within their group directory. If data is highly confidential, please request that it is emailed to the appropriate individual.</h5>
+    <br>
+    <h6 class="text-left">Here you can view or download the names associated with any of your samples injected on to one of our instruments (injections lists), database search results or results from any data analysis we do for you (processed data). 'Old Processed Data' contains files more than 4 weeks old. Processed data files can be identified by the experiment code. All data in these directories is backed up on CIMR servers. Please email us with the file names if you would like anything removed from this directory. Likewise please email us if you would like your original .raw files.</h6>
+    <br>
+
+  <div class="row">  
+  <div class="col pb-4">
+   <h5><strong>The group directory structure is:</strong></h5> 
+  <div class="tree">
+  <br>
+    <ul>
+      <li>{{ fname }} {{ lname }} group directory</li>
+    <ul>
+    <form name="form" action='' method='post'>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <li><button type="submit" name='submit_recent' class="mt-1 mb-1"><span><strong><blue>Recent Processed Data</blue></strong></span></button></li>
+    </form>
+    <ul>
+      <li>Recent Data files</li>
+    </ul>
+    <form name="form" action='' method='post'>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <li><button type="submit" name='submit_old' class="mt-1 mb-1"><span><strong><blue>Old Processed Data</blue></strong></span></button></li>
+    </form>
+    <ul>
+      <li>Data files > 4 weeks old</li>
+    </ul>
+  </div>
+  
+  <h5>Click on the buttons to access the required folders.</h5> 
+  </div>
+  </div>
+  
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}

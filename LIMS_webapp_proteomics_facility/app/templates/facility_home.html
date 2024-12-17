@@ -1,0 +1,201 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="col">
+    <h5><span style="color: red">{{ msg }}</span></h5>
+  </div>
+
+  <div class="col-lg-12 pt-0 pb-3">
+    <h5 class="text-center">There are <strong><red>{{ days_togo }}</red></strong> days to go until the end of the current financial quarter.</h6>
+  </div>
+    
+  <div class="col-lg-12 border-bottom border-type1 pt-0">
+    <h6 class="text-left"><strong><red>Updates are required to the following experiments!!!</red</strong></h6>
+  </div>
+
+<div class=row>
+
+  <div class=col-lg-11>
+    <h6><strong>Benchworks not updated for > 4 weeks:</strong> {% for b in b_update %}{{b }}, {% endfor %} </h6>
+    <h6><strong>Mass spec not updated for > 4 weeks:</strong> {% for i in i_update %}{{i}}, {% endfor %} </h6>
+    <h6><strong>Mass spec not signed off for > 8 weeks:</strong> {% for e in e_signoff %}{{e }}, {% endfor %} </h6>
+    <h6><strong>Python not signed off for > 8 weeks:</strong> {% for p in py_signoff %}{{p }}, {% endfor %} </h6>
+  </div>
+  
+  <div class=col-lg-1>
+
+    <div class=row> 
+      <form name="form-inline" action="" method='post' novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input class="mt-1 mb-2" type="submit" name="john" value="email John">
+	  </form>
+	  </div>
+
+    <div class=row> 
+      <form name="form-inline" action="" method='post' novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input class=mb-4 type="submit" name="robin" value="email Robin">
+	  </form>
+	  </div>
+
+    <div class=row> 
+      <form name="form-inline" action="" method='post' novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="submit" name="robin" value="email Robin">
+	  </form>
+	  </div>
+
+  </div>
+
+</div>     
+
+  <div class="col-lg-10 border-bottom border-type1 pt-5 mb-1">
+    <h6 class="text-left"><strong>New Requests (not marked as arrived)</strong></h6>
+    <h6 class="text-left">Experiments are keyed by email*expt_code. Data-only requests, or requests marked as arrived are not shown. View any request at 'Query DB'.</h6>
+  </div>
+
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="unarrived_expt" id="unarrived_expt" required>
+	  <option selected="selected" disable="disabled" value="">select experiment</option>
+          {% for expt in notarrexpts %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-4">
+      <input type="submit" name="mark_arrived" value="mark as arrived">
+      <input type="submit" name="get_details" value="view request details">
+    </div>
+  </div>
+  </form>
+
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Update an Experiment Request</strong> (only experiments from last 16 weeks are shown in dropdown; for historical records, see end of page)</h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="update_expt" id="update_expt" required>
+	  <option selected="selected" disable="disabled" value="">recent experiments:</option>
+          {% for expt in rcntexpts %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg">
+      <input type="submit" name="bench_method" value="add bench method">
+      <input type="submit" name="bench_hours" value="add bench hours">
+      <input type="submit" name="instr_details" value="add instrument details">
+      <input type="submit" name="python_hours" value="add bespoke analysis hours">
+      <input type="submit" name="extra_costs" value="add extra costs">
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>View  and sign-off expenses </strong> (only experiments from last 16 weeks are shown in dropdown; for historical records, see end of page)</h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="row pb-4 pt-2">
+  
+    <div class="col-lg-3">
+      <select class="form-select" name="view_expenses" id="view_expenses" required>
+	  <option selected="selected" disable="disabled" value="">select experiment</option>
+          {% for expt in rcntexpts %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-2">
+      <input type="submit" name="view_expenses" value="view expenses details">
+    </div>
+
+  </div>
+  </form>
+
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-5 mb-1">
+    <h6 class="text-left"><strong><grey>Modify historical records</grey></strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="row pb-4 pt-2">
+  
+    <div class="col-lg-3">
+      <select class="form-select" name="mod_record" id="mod_record" required>
+	  <option selected="selected" disable="disabled" value="">select experiment (any status)</option>
+          {% for expt in allexpts %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-3">
+      <select class="form-select" name="mod_type" id="mod_type" required>
+	  <option selected="selected" disable="disabled" value="" placeholder="">choose modification</option>
+          {% for mod in modtypes %}
+              <option value="{{ mod }}">{{ mod }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+
+    <div class="col-lg-2">
+      <input style="color:grey" type="submit" name="mod_historical" value="modify this record">
+    </div>
+    
+  </div>
+  
+    
+  <div class="row pb-4 pt-2">
+  
+    <div class="col-lg-3">
+      <select class="form-select" name="sign_record" id="sign_record" required>
+	  <option selected="selected" disable="disabled" value="">complete, unsigned experiments</option>
+          {% for expt in cmpd_unsgn_expts %}
+              <option value="{{ expt }}">{{ expt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-2">
+      <input style="color:grey" type="submit" name="sign_historical" value="review and sign off this record">
+    </div>
+    
+  </div>
+
+
+  </div>
+  </form>
+  
+
+</div>
+
+
+{% endblock %}
+
+

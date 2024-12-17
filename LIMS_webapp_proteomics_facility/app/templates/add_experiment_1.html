@@ -1,0 +1,63 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+
+var unamesObject = {
+{% for names, email in userdict %}
+      "{{ names }}": ["{{ email | safe }}"], 
+{% endfor %}
+};
+
+
+window.onload = function() {
+	getname = document.getElementById("unames");
+	getemail = document.getElementById("uemail");
+	
+	getname.length = 1;
+    for (var x in unamesObject) {
+		getname.options[getname.options.length] = new Option(x.slice(2),x);
+	}
+	getname.onchange = function() {
+		getemail.length = 1;
+		var email = unamesObject[getname.value];
+		for (var i = 0; i <email.length; i++) {
+			getemail.options[getemail.options.length] = new Option(email[i], email[i]);
+		}
+	}
+}
+
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-4 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Find the user for whom your are adding an experiment</strong></h6>
+    </div>
+  </div>
+  
+  <div class="col">
+      <label for="unames">user name</label>
+      <select id="unames" name="unames" class="form-control-sm custom-select"></select>
+      <label for="uemail">user email</label>
+      <select id="uemail" name="uemail" class="form-control-sm custom-select" value="{{ em if em }}" placeholder="{{ em if em }}">{{ em if em else 'select' }}</select>
+  </div>
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_user" value="select this user">
+  </div>
+  </form>
+</div>
+
+
+{% endblock %}
+
+

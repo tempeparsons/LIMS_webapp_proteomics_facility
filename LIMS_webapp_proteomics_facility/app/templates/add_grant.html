@@ -1,0 +1,49 @@
+{% extends 'baseuser.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container border-bottom border-type2 pb-5">
+  <div class="row pb-4">
+    <h5 class="text-left">New grants can be added below. Please email the facility for other edits e.g. names, institutes etc.</h5>
+  </div>
+  
+  <form name="form" method=post>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row">
+    <div class="col-auto">
+      <label for="gcode" class="col-form-label">Grant code:</label>
+    </div>
+    <div class="col-auto">
+      <input type="text" id="newgrant" name="newgrant" pattern="[^,]+" class="form-control" value="" placeholder="no comma characters">
+    </div>
+    <div class="col-auto">
+      <label for="awardyr" class="col-form-label">Year awarded:</label>
+    </div>
+    <div class="col-auto">
+      <input type="text" pattern="[0-9]{4}" name="awardyr" id="awardyr" class="form-control" placeholder="YYYY" value="">  </div>
+    </div>
+    <div class="col-auto pt-2">
+      <input type="submit" name="addgrant" value="Add this grant">
+    </div>
+  </form>
+
+  <div class="col">
+    <h6 style="text-align:end"><strong><red>{{ msg0 }}</red></strong></h6>
+    <h6 style="text-align:end"><strong><green>{{ msg1 }}</green></strong></h6>
+  </div>
+
+</div>
+
+
+
+</div>
+
+
+{% endblock %}
+
+    

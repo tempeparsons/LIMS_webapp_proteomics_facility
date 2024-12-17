@@ -1,0 +1,227 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="row">
+    <div class="col pb-2">
+      <h5 class="text-left">This is the cost calculation for <strong>{{ dlist[0] }} {{ dlist[1] }}</strong> , experiment <strong>{{ dlist[2] }}</strong>, in group <strong>{{ dlist[3] }}</strong>.</h5>
+      <h5>This user's pricing category is for <strong>{{ dlist[4] }}</strong>.</h5>
+      <h5>As they <strong>{{ dlist[5] }}</strong> a Cambridge University user, the grant code is <strong>{{ dlist[6] }}</strong>.</h5>
+      <h5>The experiment type requested was <strong>{{ dlist[7] }}</strong>, with experiment category <strong>{{ dlist[8] }}</strong>.</h5>
+      <h6>**DB searches and bespoke data analysis may have been added after the inital request.</h6>
+    </div>
+  </row>
+</div>
+
+
+<div class="container">
+
+  <div class="col-lg-7 border-bottom border-type1 pt-2 mb-1">
+    <h6 class="text-left"><blue><strong>Cost calculations for benchwork</strong></blue></h6>
+  </div>
+
+  <table style="font-size:15px; width:100%" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Bench method name</th>
+        <th scope="col">No. of gel bands</th>
+        <th scope="col">Bench mins this method</th>
+        <th scope="col">Bench mins this expt**</th>
+        <th scope="col">Bench work £ per min</th>
+        <th scope="col">Bench work costs (this expt)</th>
+        <th scope="col">Institute-adjusted cost</th>
+        
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for row in bench %}
+        <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Cost calculations for instrument time</blue></strong></h6>
+  </div>
+  
+  <table style="font-size:15px;" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Instr. method name</th>
+        <th scope="col">Instrm. meth mins</th>
+        <th scope="col">Instrm. injections</th>
+        <th scope="col">Injection-minutes</th>
+        <th scope="col">Instr. £ per min</th>
+        <th scope="col">Injection-minutes cost</th>
+        <th scope="col">Institute-adjusted cost</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in imeth %}
+        <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>  
+
+
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Cost calculations for database searches (> 1 row if repeat search(es) requested retrospecitvely)</blue></strong></h6>
+  </div>
+
+  <table style="font-size:15px;" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Search req'd?</th>
+        <th scope="col">Search mins (set by instr. method)</th>
+        <th scope="col">Search cost £ per min</th>
+        <th scope="col">Search cost this instr. method</th>
+        <th scope="col">Institute-adjusted cost</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in dbsearch %}
+        <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>  
+
+
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Cost calculations for washes</blue></strong></h6>
+  </div>
+
+  <table style="font-size:15px;" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">No. washes</th>
+        <th scope="col">wash charge applied?</th>
+        <th scope="col">extra wash mins charged for</th>
+        <th scope="col">wash cost £ per min</th>
+        <th scope="col">extra wash charge cost</th>
+        <th scope="col">Institute-adjusted cost</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for row in wash %}
+        <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>  
+
+
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Cost calculations for bespoke data analysis (if requested)</strong></blue></h6>
+  </div>
+  
+  <table style="font-size:15px; width:100%" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Minutes</th>
+        <th scope="col">Bespoke analysis £ per min</th>
+        <th scope="col">Bespoke data analysis cost</th>
+        <th scope="col">Institute-adjusted cost</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for row in python %}
+        <tr>
+        {% for cell in row %}
+          <td align="left">{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+  <div class="col-lg-7 border-bottom border-type1 pt-4 mb-1">
+    <h6 class="text-left"><blue><strong>Extra costs</strong></blue></h6>
+  </div>
+  
+  <table style="font-size:15px; width:100%" class="table table-sm">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Cost</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for row in extras %}
+        <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="col border-bottom border-type1 pt-2 mb-1">
+    <h6 class="text-left"><strong>Sum of last column from each of the above tables:</strong></h6>
+    <h6 class="text-left">Bench: {{ page[0] }}, Instrument: {{ page[1] }}, DBSearch: {{ page[2] }}, Washes: {{ page[3] }}, BespokeAnalysis: {{ page[4] }}, Extras: {{ page[5] }}</h6>
+    <br>
+    <h6 class="text-left"><strong>These should be the same as the sums already in the Expenses Summary table:</strong></h6>
+    <h6 class="text-left">Bench: {{ EStable[0] }}, Instrument: {{ EStable[1] }}, DBSearch: {{ EStable[2] }}, Washes: {{ EStable[3] }}, BespokeAnalysis: {{ EStable[4] }}, Extras: {{ EStable[5] }}</h6>
+  </div>
+
+    
+<h5 class="text-left"><red>Once mass spec work is signed off, no changes can be made execpt the addition of bespoke data analysis <strong>within the same quarter</strong>.</red></h5>
+<h5 class="text-left"><red>Once bespoke data analysis has been signed off, no further analysis expenses can be added.</red></h5>
+
+  <div class="row pb-3">
+    <div class="col-sm-4 pt-3">
+      <input type="submit" name="ms_signoff" value="Confirm and commit bench/instrument/search costs">
+    </div>
+    <div class="col-sm-4 pt-3">
+      <input type="submit" name="py_signoff" value="Confirm and commit bespoke analysis costs">
+    </div>
+
+  </div>
+
+</form>
+
+</div>
+
+{% endblock %}
+
+

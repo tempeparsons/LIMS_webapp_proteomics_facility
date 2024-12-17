@@ -1,0 +1,177 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+    
+  <h6>Results shown in these plots do not discriminate between experiments that have or haven't been signed off.</h6>
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6><strong>Get plots of experiment counts</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="expt_count" id="expt_count" required>
+	  <option selected="selected" disable="disabled" value="">breakdown counts by:</option>
+          {% for opt in stack_many %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-4">
+      <input type="submit" name="ex_count_submit" value="preview this plot">
+    </div>
+    
+  </div>
+  </form>
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6><strong>Get plots of experiment costs</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="expt_sum" id="expt_sum" required>
+	  <option selected="selected" disable="disabled" value="">type of cost</option>
+          {% for opt in expt_cost %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-3">
+      <select class="form-select" name="stack_expt" id="stack_expt" required>
+	  <option selected="selected" disable="disabled" value="">breakdown costs by:</option>
+          {% for opt in stack_many %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg">
+      <input type="submit" name="ex_cost_submit" value="preview this plot">
+    </div>
+    
+  </div>
+  </form>
+
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6><strong>Get plots of hours spent at bench or hours spent on bespoke analysis</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="hrs_sum" id="hrs_sum" required>
+	  <option selected="selected" disable="disabled" value="">select which:</option>
+          {% for opt in hrs %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-3">
+      <select class="form-select" name="stack_hrs" id="stack_hrs" required>
+	  <option selected="selected" disable="disabled" value="">breakdown hours by:</option>
+          {% for opt in stack_many %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg">
+      <input type="submit" name="hrs_submit" value="preview this plot">
+    </div>
+    
+  </div>
+  </form>
+
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6><strong>Get plots of counts of injections or washes - as total or grouped by instrument method.</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="iw_sum" id="iw_sum" required>
+	  <option selected="selected" disable="disabled" value="">select which:</option>
+          {% for opt in iw %}
+              <option value={{ loop.index }}>{{ opt }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    
+    <div class="col-lg-3">
+      <select class="form-select" name="stack_iw" id="stack_iw" required>
+	  <option selected="selected" disable="disabled" value="">breakdown total by:</option>
+              <option value={{ '1' }}>{{ stack_iw[0] }}</option>
+              <option value={{ '7' }}>{{ stack_iw[1] }}</option>
+	  </select>
+    </div>
+    
+    <div class="col-lg">
+      <input type="submit" name="iw_submit" value="preview this plot">
+    </div>
+    
+  </div>
+  </form>
+
+
+  <div class="col-lg-10 border-bottom border-type1 pt-3 mb-1">
+    <h6><strong>Get numbers of samples processed at bench - as totals or grouped by bench method.</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-4 pt-2">
+    <div class="col-lg-3">
+      <input type="text" name="bm" id="bm" class="form-control" value="number of samples" readonly>
+    </div>
+
+    <div class="col-lg-3">
+      <select class="form-select" name="bm_count" id="bm_count" required>
+	  <option selected="selected" disable="disabled" value="">breakdown total by:</option>
+              <option value={{ '1' }}>{{ stack_bm[0] }}</option>
+              <option value={{ '8' }}>{{ stack_bm[1] }}</option>
+	  </select>
+    </div>
+    
+    
+    <div class="col-lg">
+      <input type="submit" name="bm_submit" value="preview this plot">
+    </div>
+    
+  </div>
+  </form>
+
+
+
+</div>
+
+
+{% endblock %}
+
+

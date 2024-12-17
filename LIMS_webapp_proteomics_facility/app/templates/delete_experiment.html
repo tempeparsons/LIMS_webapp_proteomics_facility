@@ -1,0 +1,89 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+
+var unamesObject = {
+{% for names, email in userdict %}
+      "{{ names }}": ["{{ email | safe }}"], 
+{% endfor %}
+};
+var exptsObject = {
+{% for email, expts in emex_dict %}
+      "{{ email }}": [{% for expt in expts%} "{{ expt | safe }}", {% endfor %}], 
+{% endfor %}
+};
+
+
+window.onload = function() {
+	getname = document.getElementById("unames");
+	getemail = document.getElementById("uemail");
+	getecode = document.getElementById("expt_code");
+	
+	getname.length = 1;
+    for (var x in unamesObject) {
+		getname.options[getname.options.length] = new Option(x.slice(2),x);
+	}
+	getname.onchange = function() {
+		getemail.length = 1;
+		var email = unamesObject[getname.value];
+		for (var i = 0; i <email.length; i++) {
+			getemail.options[getemail.options.length] = new Option(email[i], email[i]);
+		}
+		getemail.onchange()
+	}
+	getemail.onchange = function() {
+		getecode.length = 1;
+		var ecode = exptsObject[getemail.value];
+		for (var i = 0; i <ecode.length; i++) {
+			getecode.options[getecode.options.length] = new Option(ecode[i], ecode[i]);
+		}
+	}
+}
+
+
+
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+  
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><red>Please read before proceeding:  Any experiment you delete will be deleted in its entirity from all tables in the database. This cannot be undone. You can delete or add samples from within an experiment at the Delete Samples page.</red></h6>
+      <h6 class="text-left"><strong>Find the user and experiment that you want to delete</strong></h6>
+    </div>
+  </div>
+  
+  <div class="col">
+      <label for="unames">user name</label>
+      <select id="unames" name="unames" class="form-control-sm custom-select"></select>
+      <label for="uemail">user email</label>
+      <select id="uemail" name="uemail" class="form-control-sm custom-select" value="{{ em if em }}" placeholder="{{ em if em }}">{{ em if em else 'select' }}</select>
+ 	  <label for="expt_code">experiment code</label>
+      <select id="expt_code" name="expt_code" class="form-control-sm custom-select"></select>
+  </div>
+  
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_expt" value="delete this experiment">
+  </div>
+  
+  </form>
+</div>
+
+{% endblock %}
+
+
+
+

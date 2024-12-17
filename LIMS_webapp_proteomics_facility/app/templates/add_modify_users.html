@@ -1,0 +1,262 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+
+<script>
+function set_email1_output(){
+	var email_input = document.getElementById("email_1");
+    var position = document.getElementById("position_1");
+    var selectedOption = position.options[position.selectedIndex];
+    var positionValue = selectedOption.getAttribute("value");
+    var email_output = document.getElementById("PIemail_1");
+    if(positionValue=="PI/Project_Lead"){
+    	email_output.value = email_input.value;
+    }
+    else if(positionValue_edit != "PI/Project_Lead"){
+    	email_output.value = "";
+    }   
+}
+
+function set_email2_output(){
+	var email_input2 = document.getElementById("email_2");
+    var position2 = document.getElementById("position_2");
+    var selectedOption2 = position2.options[position2.selectedIndex];
+    var positionValue2 = selectedOption2.getAttribute("value");
+    var email_output2 = document.getElementById("PIemail_2");
+    if(positionValue2=="PI/Project_Lead"){
+    	email_output2.value = email_input2.value;
+    }
+    else if(positionValue2 != "PI/Project_Lead"){
+    	email_output2.value = "";
+    }   
+}
+
+</script>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container pt-4 border-bottom border-type2">
+
+  <div class="col border-bottom border-type1">
+    <h5 class="text-left"><strong>Add a new user:</strong> (be aware there's <red>no restriction on access level</red> by this route)</h5>
+  </div>
+
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="row pb-3 pt-3">
+  
+    <div class="col">
+      <input class="form-control" type="text" name="fname_1" id="fname_1" placeholder="first name" value="{{ fn1 if fn1 }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    <div class="col">
+      <input class="form-control" type="text" name="lname_1" id="lname_1" placeholder="last name" value="{{ ln1 if ln1 }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    <div class="col">
+      <input class="form-control" type="text" pattern="[^\s]+" name="email_1" id="email_1" placeholder="email" value="{{ em1 if em1 }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    
+    <div class="col">
+      <select class="form-select" name="access_1" id="access_1" value="">
+      <option selected="selected" disable="disabled" value="">{{ 'select level:' }}</option>
+          {% for al in als  %}
+              <option value="{{ al }}">{{ al }}</option>
+          {% endfor %}
+      </select>
+    </div>
+	     
+    <div class="col">
+      <select class="form-select" name="position_1" id="position_1" value="" onChange="return set_email1_output()">
+      <option selected="selected" disable="disabled" value="">{{ 'select position:' }}</option>
+          {% for p in ps  %}
+              <option value="{{ p }}">{{ p }}</option>
+          {% endfor %}
+      </select>
+    </div>
+        
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" name="PIemail_1" id="PIemail_1" placeholder="PI/project lead's email" required>
+	</div>	
+    
+    <div class="col">
+      <input class="form-control" type="text" name="iname_1" id="iname_1" placeholder="institute name" value="{{ iname1 if iname1 }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+
+    
+    <div class="col">
+      <select class="form-select" name="itype_1" id="itype_1" placeholder="institute type" required>
+	  <option selected="selected" disable="disabled" value="">{{ 'select institute type:' }}</option>
+          {% for type in itypes  %}
+              <option value="{{ type }}">{{ type }}</option>
+          {% endfor %}
+	  </select>
+ 	</div>
+ 	
+  <div class="col-lg-8 pt-5">
+    <h6 class="text-left">Give this new user some grant codes if they're a Cambridge University user</h6>
+  </div>
+
+  <div class="col-lg-10 pt-2">
+  <div class="row">
+    <div class="input-group">
+      <input class="form-control" type="text" name="grant1_1" id="grant1_1" placeholder="grant code 1" value="">
+      <input class="form-control" type="number" minlenth="4" maxlength="4" name="year1_1" id="year1_1" placeholder="start yr 1" value="">
+      <input class="form-control" type="text" name="grant2_1" id="grant2_1" placeholder="grant code 2" value="">
+      <input class="form-control" type="number" minlength="4" maxlength="4" name="year2_1" id="year2_1" placeholder="start yr 1" value="">
+      <input class="form-control" type="text" name="grant3_1" id="grant3_1" placeholder="grant code 3" value="">
+      <input class="form-control" type="number" minlenght="4" maxlength="4" name="year3_1" id="year3_1" placeholder="start yr 3" value="">
+    </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+	  <h6><strong><red>{{ msg }}</red></strong></h6>
+	  <h6><strong><green>{{ msg0 }}</green></strong></h6>
+	</div>
+  </div>
+  
+  <div class="row pb-5">
+    <div class="col">
+	<input type="submit" name="adduser" value="register this user">
+    </div>
+  </div>
+  </form> 
+  
+</div>
+  
+
+  
+  <div class="col border-bottom border-type1 pt-3">
+    <h5 class="text-left"><strong>Modify a user:</strong> <red>(Any modified user-info is associated with the email (non-editable) selected in the first field. Use pre-set dropdown values unless changing names.)</red></h5>
+  </div>
+  
+  <form name="form" action='' method='post' was-validated>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="row pb-3 pt-3">
+  
+    <div class="col">
+      <select class="form-select" name="email_2" id="email_2" value="">
+      <option selected="selected" disable="disabled" value="">{{ 'select email:' }}</option>
+          {% for em in emails  %}
+              <option value="{{ em }}">{{ em }}</option>
+          {% endfor %}
+      </select>
+    </div>
+
+  
+    <div style="position:relative;width:150px;height:60px;border:0;padding:0;margin:0;">
+      <select style="position:absolute;top:0px;left:0px;width:150px; height:40px;line-height:40px;margin:0;padding:0;" onchange="document.getElementById('fname_2').value=this.options[this.selectedIndex].text; document.getElementById('idValue1').value=this.options[this.selectedIndex].value;">
+        <option selected="selected" disable="disabled" value=""></option>
+          {% for fn in fnames %}
+            <option value="{{ fn }}">{{ fn }}</option>
+	      {% endfor %}
+      </select>
+      <input name="fname_2" placeholder="add/select name" id="fname_2" style="position:absolute;top:0px;left:0px;width:130px;width:130px\9;#width:130px;height:40px; height:28px\9;#height:18px;border:1px solid #A9A9A9;" onfocus="this.select()" type="text">
+      <input name="idValue1" id="idValue1" type="hidden">
+    </div>
+
+
+    <div style="position:relative;width:150px;height:60px;border:0;padding:0;margin:0;">
+      <select style="position:absolute;top:0px;left:0px;width:150px; height:40px;line-height:40px;margin:0;padding:0;" onchange="document.getElementById('lname_2').value=this.options[this.selectedIndex].text; document.getElementById('idValue2').value=this.options[this.selectedIndex].value;">
+        <option selected="selected" disable="disabled" value=""></option>
+        {% for ln in lnames %}
+          <option value="{{ ln }}">{{ ln }}</option>
+	    {% endfor %}
+      </select>
+      <input name="lname_2" placeholder="add/select name" id="lname_2" style="position:absolute;top:0px;left:0px;width:130px;width:130px\9;#width:130px;height:40px; height:28px\9;#height:18px;border:1px solid #A9A9A9;" onfocus="this.select()" type="text">
+      <input name="idValue2" id="idValue2" type="hidden">
+    </div>
+
+    
+    <div class="col">
+      <select class="form-select" name="access_2" id="access_2" value="">
+      <option selected="selected" disable="disabled" value="">{{ 'select level:' }}</option>
+          {% for al in als  %}
+              <option value="{{ al }}">{{ al }}</option>
+          {% endfor %}
+      </select>
+    </div>
+	     
+    <div class="col">
+      <select class="form-select" name="position_2" id="position_2" value="" onChange="return set_email2_output()">
+      <option selected="selected" disable="disabled" value="">{{ 'select position:' }}</option>
+          {% for p in ps  %}
+              <option value="{{ p }}">{{ p }}</option>
+          {% endfor %}
+      </select>
+    </div>
+        
+    <div class="col-lg-2">
+      <input style="font-size:14px;" class="form-control" name="PIemail_2" id="PIemail_2" placeholder="PI/project lead's email" required>
+	</div>	
+    
+    <div class="col">
+      <input class="form-control" type="text" name="iname_2" id="iname_2" placeholder="institute name" value="{{ iname if iname }}" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+
+    
+    <div class="col">
+      <select class="form-select" name="itype_2" id="itype_2" placeholder="institute type" required>
+	  <option selected="selected" disable="disabled" value="">{{ itype if itype else 'select institute type:' }}</option>
+          {% for type in itypes  %}
+              <option value="{{ type }}">{{ type }}</option>
+          {% endfor %}
+	  </select>
+ 	</div>
+ 	
+  <div class="col-lg-12 pt-5">
+    <h6 class="text-left">If you're changing an external user's institute to be Cambridge University, or an internal user needs a grant added, do this here:</h6>
+  </div>
+
+  <div class="col-lg-10 pt-2">
+  <div class="row">
+    <div class="input-group">
+      <input class="form-control" type="text" name="grant1_2" id="grant1_2" placeholder="grant code 1" value="">
+      <input class="form-control" type="number" minlenth="4" maxlength="4" name="year1_2" id="year1_2" placeholder="start yr 1" value="">
+      <input class="form-control" type="text" name="grant2_2" id="grant2_2" placeholder="grant code 2" value="">
+      <input class="form-control" type="number" minlength="4" maxlength="4" name="year2_2" id="year2_2" placeholder="start yr 1" value="">
+      <input class="form-control" type="text" name="grant3_2" id="grant3_2" placeholder="grant code 3" value="">
+      <input class="form-control" type="number" minlenght="4" maxlength="4" name="year3_2" id="year3_2" placeholder="start yr 3" value="">
+    </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+	  <h6><strong><red>{{ msg2 }}</red></strong></h6>
+	  <h6><strong><green>{{ msg02 }}</green></strong></h6>
+	</div>
+  </div>
+  
+  <div class="row pb-5">
+    <div class="col">
+	<input type="submit" name="modifyuser" value="modify user">
+    </div>
+  </div>
+  </form> 
+
+
+</div>
+
+
+{% endblock %}
+
+

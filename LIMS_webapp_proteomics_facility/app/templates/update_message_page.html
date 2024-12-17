@@ -1,0 +1,27 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row pt-2">  
+  	<h6 class="text-left"><strong><blue>You updated the core finance values successfully</blue></strong></h6>
+  </div>
+  
+  
+	<div class="col border-bottom border-type1 ps-1">
+      <h6 class="text-left">If you want to update any further finance values, go to <a class="btn btn-outline-secondary btn-sm" href="{{url_for('finances_1')}}">FINANCE HOME</a> first.</h6>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+

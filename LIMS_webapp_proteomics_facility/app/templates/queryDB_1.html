@@ -1,0 +1,147 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+
+window.onload = function() {
+  var getemail = document.getElementById("unames2").value;
+}
+
+var exptsObject = {
+{% for email, expts in emex_dict %}
+      "{{ email }}": [{% for expt in expts%} "{{ expt | safe }}", {% endfor %}], 
+{% endfor %}
+};
+
+function mysecondFunction() {
+  var getemail2 = document.getElementById("unames2").value;
+  var ecode = exptsObject[getemail2];
+  showecode = document.getElementById("expt_code");
+  showecode.length = 1;
+  for (var i = 0; i <ecode.length; i++) {
+	showecode.options[showecode.options.length] = new Option(ecode[i], ecode[i]);
+	}
+}
+
+
+  
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col">
+      <h5><span style="color: red">{{ msg }}</span></h5>
+    </div>
+
+  <form action="" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Find the user that you want to query</strong> (start typing their first name)</h6>
+    </div>
+  </div>
+
+    <input list="unms" name="unames1" id="unames1">
+    <datalist id="unms">
+  	  {% for name in unms %}
+        <option value="{{ name[3] }}">{{ name[1] }}</option>
+      {% endfor %}
+    </datalist>
+
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_user" value="query this user">
+  </div>
+  
+  </form>
+  
+
+
+
+  <form action="" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Find the user and their experiment that you want to query</strong>(start typing their first name)</h6>
+    </div>
+  </div>
+
+  <div class=col-lg-8>  
+    <input list="unms2" name="unames2" id="unames2" onchange="mysecondFunction()" class="me-3">
+    <datalist id="unms2" >
+  	  {% for name in unms %}
+        <option value="{{ name[3] }}">{{ name[1] }}</option>
+      {% endfor %}
+    </datalist>
+
+    <label for="expt_code">expt codes (click to see)</label>
+    <select id="expt_code" name="expt_code" class="form-control-sm custom-select" ></select> 
+  </div>
+  
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_expt" value="query this user's experiment">
+  </div>
+  
+  </form>
+  
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-9 border-bottom border-type1 pt-5 mb-1">
+    <h6 class="text-left"><strong>Table-by-Table view of the database</strong></h6>
+  </div>
+  
+  <div class="col-lg">
+      <input type="submit" name="get_pwds" value="get PWDS table (encrypted)" class="mt-1">
+      <input type="submit" name="get_users" value="get USERS table" class= "mb-2">
+      <input type="submit" name="get_ereqs" value="get EXPT REQUESTS table">
+      <input type="submit" name="get_sreqs" value="get SAMPLE REQUESTS table">
+      <input type="submit" name="get_sdets" value="get SAMPLE DETAILS table">
+      <input type="submit" name="get_dreqs" value="get DATA REQUESTS table">
+      <input type="submit" name="get_bhrs" value="get BENCH HOURS table">
+      <input type="submit" name="get_idets" value="get INSTR. DETAILS table">
+      <input type="submit" name="get_esum" value="get EXPENSE SUMMARY table">
+      <input type="submit" name="get_bmeths" value="get BENCH_METHODS table (encrypted)" class="mt-1">
+      <input type="submit" name="get_idmeths" value="get INSTR. + DATA METHODS table" class= "mb-2">
+      <input type="submit" name="get_intypes" value="get INSTITUTE TYPES table">
+      <input type="submit" name="get_species" value="get DB SPECIES table">
+      <input type="submit" name="get_ppm" value="get PRICE PER MIN table">
+      <input type="submit" name="get_instrmnts" value="get INSTRUMENTS table">
+      <input type="submit" name="get_acqn" value="get ACQUISITION table">
+  </div>
+
+  </form>
+
+
+</div>
+
+{% endblock %}
+
+
+  <form name="form" action='' method='post'>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="col-lg-8 border-bottom border-type1 mb-3">
+    <div class="row pt-4">
+      <h6 class="text-left"><strong>Find the user that you want to query</strong></h6>
+    </div>
+  </div>
+  <div class="col">
+      <label for="unames">user name</label>
+      <select id="unames" name="unames" class="form-control-sm custom-select"></select>
+      <label for="uemail">user email</label>
+      <select id="uemail" name="uemail" class="form-control-sm custom-select" value="{{ em if em }}" placeholder="{{ em if em }}">{{ em if em else 'select' }}</select>
+  </div>
+  
+  <div class="col pt-4 pb-4">
+    <input type="submit" name="this_user" value="query this user">
+  </div>
+
+
+

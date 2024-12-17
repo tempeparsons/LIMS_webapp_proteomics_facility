@@ -1,0 +1,262 @@
+{% extends 'basefacility.html' %}
+
+{% block extrascript %}
+<script>
+var nameObject = {
+{% for fname, email in fname_email %}
+      "{{ fname }}": [{% for mail in email %}"{{ mail }}",{% endfor %}], 
+{% endfor %}
+};
+
+var ecodeObject = {
+{% for email, ecode in email_ecode %}
+      "{{ email }}": [{% for code in ecode %}"{{ code }}",{% endfor %}], 
+{% endfor %}
+};
+
+var name2Object = {
+{% for fname, email in fname_email2 %}
+      "{{ fname }}": [{% for mail in email %}"{{ mail }}",{% endfor %}], 
+{% endfor %}
+};
+
+var ecode2Object = {
+{% for email, ecode in email_ecode2 %}
+      "{{ email }}": [{% for code in ecode %}"{{ code }}",{% endfor %}], 
+{% endfor %}
+};
+
+var name3Object = {
+{% for fname, email in fname_email3 %}
+      "{{ fname }}": [{% for mail in email %}"{{ mail }}",{% endfor %}], 
+{% endfor %}
+};
+
+var ecode3Object = {
+{% for email, ecode in email_ecode3 %}
+      "{{ email }}": [{% for code in ecode %}"{{ code }}",{% endfor %}], 
+{% endfor %}
+};
+
+window.onload = function() {
+	getfname = document.getElementById("get_first_name");
+	getemail = document.getElementById("get_email");
+	getecode =  document.getElementById("expt_code");
+	getfname.length = 1;
+	
+    for (var x in nameObject) {
+		getfname.options[getfname.options.length] = new Option(x,x);
+	}
+	getfname.onchange = function() {
+		getemail.length = 1;
+		var email = nameObject[getfname.value];
+		for (var i = 0; i <email.length; i++) {
+			getemail.options[getemail.options.length] = new Option(email[i], email[i]);
+		}
+		getemail.onchange()
+	}
+	getemail.onchange = function() {
+		getecode.length = 1;
+		var ecodes = ecodeObject[getemail.value];
+		for (var i = 0; i <ecodes.length; i++) {
+			getecode.options[getecode.options.length] = new Option(ecodes[i], ecodes[i]);
+		}		
+	}
+	getfname2 = document.getElementById("get_first_name2");
+	getemail2 = document.getElementById("get_email2");
+	getecode2 =  document.getElementById("expt_code2");
+	getfname2.length = 1;
+	
+    for (var x in name2Object) {
+		getfname2.options[getfname2.options.length] = new Option(x,x);
+	}
+	getfname2.onchange = function() {
+		getemail2.length = 1;
+		var email = name2Object[getfname2.value];
+		for (var i = 0; i <email.length; i++) {
+			getemail2.options[getemail2.options.length] = new Option(email[i], email[i]);
+		}
+		getemail2.onchange()
+	}
+	getemail2.onchange = function() {
+		getecode2.length = 1;
+		var ecodes = ecode2Object[getemail2.value];
+		for (var i = 0; i <ecodes.length; i++) {
+			getecode2.options[getecode2.options.length] = new Option(ecodes[i], ecodes[i]);
+		}		
+	}
+	getfname3 = document.getElementById("get_first_name3");
+	getemail3 = document.getElementById("get_email3");
+	getecode3 =  document.getElementById("expt_code3");
+	getfname3.length = 1;
+	
+    for (var x in name3Object) {
+		getfname3.options[getfname3.options.length] = new Option(x,x);
+	}
+	getfname3.onchange = function() {
+		getemail3.length = 1;
+		var email = name3Object[getfname3.value];
+		for (var i = 0; i <email.length; i++) {
+			getemail3.options[getemail3.options.length] = new Option(email[i], email[i]);
+		}
+		getemail3.onchange()
+	}
+	getemail3.onchange = function() {
+		getecode3.length = 1;
+		var ecodes = ecode3Object[getemail3.value];
+		for (var i = 0; i <ecodes.length; i++) {
+			getecode3.options[getecode3.options.length] = new Option(ecodes[i], ecodes[i]);
+		}		
+	}
+}
+
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Mark experiment as arrived</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="unarrived_expt" id="unarrived_expt" required>
+	  <option selected="selected" disable="disabled" value="">have these experiments arrived?</option>
+          {% for request in not_arrived %}
+              <option value="{{ request }}">{{ request }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="arrived" value="mark as arrived">
+    </div>
+    <div class="col">
+      <h5><span style="color: green">{{ msg }}</span></h5>
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Associate methods with experiments</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="methods" id="methods" required>
+	  <option selected="selected" disable="disabled" value="">these experiments need methods!</option>
+          {% for request in needs_processing %}
+              <option value="{{ request }}">{{ request }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="open_methods" value="open method page">
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Associate bench hours with experiments</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-4">
+      <select class="form-select" name="bench" id="bench" required>
+	  <option selected="selected" disable="disabled" value="">these experiments need bench hours!</option>
+          {% for request in mayneedbenchwork %}
+              <option value="{{ request }}">{{ request }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="open_bench" value="open bench hours page">
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Calculate per-experiment total cost</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-3">
+      <select class="form-select" name="cost_expt" id="cost_expt" required>
+	  <option selected="selected" disable="disabled" value="">choose experiment</option>
+          {% for experiment in getallexperiments %}
+              <option value="{{ experiment }}">{{ experiment }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="experiment_cost" value="get total cost">
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Associate Python analysis with experiments</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-4">
+      <select class="form-select" name="analysis" id="analysis" required>
+	  <option selected="selected" disable="disabled" value="">has Python analysis been performed?</option>
+          {% for request in mayneedpython %}
+              <option value="{{ request }}">{{ request }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="open_analysis" value="open bespoke analysis page">
+    </div>
+  </div>
+  </form>
+
+
+  <div class="col-lg-9 border-bottom border-type1 pt-3 mb-1">
+    <h6 class="text-left"><strong>Associate extra item costs with experiments</strong></h6>
+  </div>
+  
+  <form name="form-inline" action="" method='post' novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row pb-5 pt-2">
+    <div class="col-lg-4">
+      <select class="form-select" name="extraitems" id="extraitems" required>
+	  <option selected="selected" disable="disabled" value="">select an experiment that incurred extra costs</option>
+          {% for experiment in getallexperiments %}
+              <option value="{{ experiment }}">{{ experiment }}</option>
+          {% endfor %}
+	  </select>
+    </div>
+    <div class="col-lg-2">
+      <input type="submit" name="extra_items" value="open additional expenses page">
+    </div>
+  </div>
+  </form>
+
+
+</div>
+
+
+{% endblock %}
+
+

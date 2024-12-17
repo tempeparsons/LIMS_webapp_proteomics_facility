@@ -1,0 +1,115 @@
+{% extends 'baseuser.html' %}
+
+
+{% block content %}
+
+
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="col-lg-8 border-bottom border-type1">
+      <h4 class="text-center">Understanding the request form</h4>
+      <p class="text-center">scroll to end for example screenshots<p>
+  </div>
+</div>
+
+<div class="container border-bottom border-type2 pt-4">
+
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>Estimating protein concentration:</blue></h5>
+      <p>A approximate protein concentration enables efficient digestion and injection of optimal volumes on to instruments, which means better data and fewer re-injections. 
+      <br><br>If you aren't regularly performing protein concentration assays in your lab, then this <a href="https://pubmed.ncbi.nlm.nih.gov/12611266/"><black>2003 publication</black></a> and this <a href="https://www.thermofisher.com/uk/en/home/life-science/protein-biology/protein-biology-learning-center/protein-biology-resource-library/pierce-protein-methods/overview-protein-assays.html"><black>guide from ThermoFisher</black></a> are useful resources. Assays can be usually be adapted for microplates or nanodrops where sample preservation is critical.
+      <br><br>If you're sending in peptides, give concentrations from the last known measurement (ug/ul) before digestion.
+      <br>If you're cutting a gel band, assume a 20ul resuspension volume. 
+      <br>
+      <br>
+       Concentrations need only be very approximate:</p>
+    <div class="col-sm ps-4 pb-4">
+      <li>For undetectable concentrations, report '0.1 ug/ul' and fill out the 'extra notes' section as appropriate.</li>
+      <li>Low-good concentration  ~ 0.5 ug/ul </li>
+      <li>Optimal is 1.0 ug/ul </li>
+      <li>Loads would be > 1.5 ug/ul </li>
+    </div>
+      <br>
+      
+      <p>The below image may help estimate concentrations from protein bands.</p>
+      
+  <div class="row">
+    <div class="col-lg-4 pt-0 pb-3 align-self-end">
+	  <img src="{{ url_for('static', filename='gel_protein_concs.png') }}"  class="ps-3">
+    </div>
+    <div class="col-lg-6 pt-3 pb-1 align-self-start" style="font-size: 0.8rem">
+	  <p><em>20 to 5000 ng of protein expose to Quick Coomassie Stain for 30 min, courtesy of labxchange.org </em></p>
+    </div>
+  </div>
+
+
+  <div class="row mb-2 pt-4">
+    <h5 class="text-left"><blue>Estimating the number of injections:</blue></h5>
+      <p>Instrument time in charged per injection. If we are fractionating one of your samples into 12 fractions, you'll need 12 injections. Likewise if we're cutting 4 bands from your gel, you'll need 4 injections. This column can't be blank, so take your best guess. This is simply for initialising file-name lists - <em>you won't be over-charged if you guess too high!</em></p>
+  </div>
+
+    
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>The standard data analysis package:</blue></h5>
+    <p>If you want your data run through some commercial or open-source software that we use in the facility (see Home > Services > Data Analysis Service for a full list), then you most likely want to select the standard data analysis package. This includes anything from 15 minutes to 2 hrs of analysis using the open source.freeware or proprietary pieces of software used by the facility. If you require any additonal analysis (e.g. seaching against a different database, changes to graphical presentation) a new 'data_analysis_only' request must be submitted.</p>
+  </div> 
+     
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>Requesting data analysis only:</blue></h5>
+    <p>Data analysis can be requested without submitting samples. You will still need a unique experiment code for this request, so we can track it. Choose 'Data analysis only, no samples' from the dropdown menu and then hit 'Submit all'. Typically, analysis-only requests are made for when specific python or R scripts need to be written, a user-specific piece of software is required, or for when adjustments are required to a pre-agreed standard analysis output. We can discuss these options with you as per your request.</p>
+  </div> 
+     
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>Choosing experiment and sample codes:</blue></h5>
+    <p>Every user-request made via the sample submission form gets associated with an experiment code. Every code for an individual user must be <strong><em>unique</em></strong>, otherwise we can't retrieve it from the database. If a single experiment is split over two sample submissions, two unique codes will be required. An experiment code consists of up to 6 alphanumeric characters <strong><em>excluding underscores</em></strong>. There is no need to include group leader or researcher intials in the experiment code as these are automatically prefixed on to each instrument injection code. Experiment and sample codes are chosen by the user, though we recommmened a simple and concise format</p>
+  </div>
+  
+  
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>File name patterns:</blue></h5>
+    <p>Each injection on to the instruments is uniquely named. The file name pattern is: GroupInitials_ResearcherInitials_ExptCode_SampleCode_FractionCode_RepeatInjectionCode. The fraction code refers to how many injections you estimated that one sample would generate. A repeat injection code is only included if the sample needs to be re-injected with, for example, a different method or volume.</p>
+  </div>  
+
+
+    
+  <div class="row mt-2">
+    <h5 class="text-left"><blue>Column headers in Sample Submission Form:</blue></h5>
+    <p style="font-size:15px;">
+    <strong>Experiment code:</strong> A single experiment, consisting of multiple samples, is given a short identifier that is easily written on a tube. Each user's code must be unique. Different users may use the same code.<br>
+    <strong>Sample codes:</strong> Each sample within one experiment receives a short code, so that "expt_code, sample_code" are easily written on a tube. Sample codes must be unique within any one experiment, but may be reused between experiments.<br>
+    <strong>Protein concentration:</strong> required for every sample. See above advice. If the facility is measuring the concentration, put '0.1'.<br>
+    <strong>Number of injections:</strong> see above description.<br>
+    <strong>Run gel:</strong> Tick this box if the facility is running your gels for you. We run pre-cast 10% mini-gels as standard but other options are possible.<br>
+    <strong>In-gel digest:</strong> Tick these boxes if the facility is cutting bands and doing an in-gel digest for you<br>
+    <strong>S-trap:</strong> Method for cleaning up SDS-gel loading buffer without running a gel, permitting gel-free digest.<br>
+    <strong>In-solution or on-bead digest:</strong> Tick this box if you are providing proteins suspended in a Trypsin-compatible buffer or we are performing an on-bead digest for you. Please contact us for help or advice on preparing protein solutions.<br>
+    <strong>LysC digest:</strong> LysC is appreciably more expensive than all our other enzymes, so incurs an additional charge (see pricing page).<br>
+    <strong>PO4-enrichment:</strong> Phospho-peptide enrichment. Although most groups perform their own enrichments, we can do this in house. We typically use the Zr-IMAC HP (MagReSyn) enrichment kit.<br>
+    <strong>labelling:</strong> Suitable for experiments where very high accuracy relative quantitation is required. Labelled peptides are run on our Fusion Lumos. Users can choose from in house-aliquotted TMT labels (cheapest option), supplying their own kits or purchasing them through the facility.<br>
+    <strong>Fractionation:</strong> Recommended for complex samples requiring a complete survey of proteins present. We typically perform reverse-phase HPLC, collecting 12 fractions, but can cater for specific requests.<br>
+    <strong>Intact mass:</strong> Check this box if you are sending us a purified protein solution for intact mass-analysis that is ready to resuspend or load directly on an instrument.<br>
+    </p>
+
+    </p>
+  </div>
+  
+  <div class="row">
+      <div class="col-lg pt-0 pb-3 align-self-end">
+        <h4><em>Example 1 </em></h4>
+	    <img src="{{ url_for('static', filename='reqform1.png') }}"  class="ps-3">
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-lg pt-0 pb-3 align-self-end">
+        <h4><em>Example 2 </em></h4>
+	    <img src="{{ url_for('static', filename='reqform2.png') }}"  class="ps-3">
+      </div>
+  </div>
+  
+
+</div>
+
+
+
+
+{% endblock %}

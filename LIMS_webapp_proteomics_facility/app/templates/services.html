@@ -1,0 +1,90 @@
+{% extends 'baseexternal.html' %}
+
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="col-lg-8 mt-3 mb-3">
+    <h4 class="text-center">We provide the following mass spectrometry services:</h4>
+  </div>
+</div>  
+
+<div class="container">
+  <div class="row align-items-around">
+    <div class="col">
+      <div class="card border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='raw_file_text.png') }}" class="img5" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Protein Identification</blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('protein_identification')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='20230728_130804_1.jpg') }}" class="img5" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Discovery Proteomics</blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('protein_discovery')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+        <div class="col">
+      <div class="card border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='PRM_tomato_1.png') }}" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Targeted Proteomics</blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('targeted_proteomics')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mx-10 border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='20230727_145332_1.jpg') }}" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Off-line Fractionation<br></blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('offline_fractionation')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+       </div>
+    </div>
+    <div class="col">
+      <div class="card mx-10 border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='cross_linking_MYO6_interactome_1.jpg') }}" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Protein Interactions<br></blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('protein_cross_linking')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mx-10 border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='intact_mass_analysis.png') }}" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Intact Mass Analysis<br></blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('intact_mass_analysis')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mx-10 border-type1" style="width: 100%;">
+        <img class="card-img-top" src="{{ url_for('static', filename='data_analysis_1.jpg') }}" alt="Card image cap">
+         <div class="card-body">
+            <h6 class="card-title"><blue>Data Analysis Service<br></blue></h6>
+            <p class="card-text"></p>
+            <a href="{{url_for('data_service')}}" class="btn btn-outline-secondary">Learn more</a>
+         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+    
